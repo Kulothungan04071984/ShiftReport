@@ -1,0 +1,332 @@
+﻿@model Utilization
+@{
+    ViewData["Title"] = "shiftReport";
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div style="padding-top:2%;">
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-lg-7">
+            <div class="card lg-7">
+            <div class="card-body">
+                <h5 class="card-title">Module Utilization</h5>
+                <p class="card-text"></p>
+                <canvas id="myChart" style="width:50%;"></canvas>
+            </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <span><img src="~/images/blue.png" style="width:15%;height:50%;" /></span>
+                                    <span>Production</span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span>
+                                        <img src="~/images/green.png" style="width:15%;height:50%;" />
+                                    </span>
+                                    <span>Wait Previous</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span>
+                                        <img src="~/images/light-Green.png" style="width:15%;height:50%;" />
+                                    </span>
+                                    <span>Wait Next</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <span>
+                                        <img src="~/images/light-brown.png" style="width:15%;height:40%;" />
+                                    </span>
+                                    <span>Changeover</span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span>
+                                        <img src="~/images/brown.png" style="width:15%;height:40%;" />
+                                    </span>
+                                    <span>Part Supply</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span>
+                                        <img src="~/images/red.png" style="width:15%;height:40%;" />
+
+                                    </span>
+                                    <span>Mechine Error</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <span>
+                                        <img src="~/images/orange.png" style="width:15%;height:60%;" />
+                                    </span>
+                                    <span>Operator Downtime</span>
+                                </div>
+                                <div class="col-lg-4">
+                                    <span>
+                                        <img src="~/images/purple.png" style="width:15%;height:60%;" />
+                                    </span>
+                                    <span>Maintenance</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span>
+                                        <img src="~/images/silvar.png" style="width:15%;height:60%;" />
+                                    </span>
+                                    <span>Other</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                      </div>
+           
+        </div>
+        <div class="col-lg-5">
+            <div class="card lg-5">
+                <div class="card-body">
+                    <h5 class="card-title">Line Utilization</h5>
+                    <p class="card-text"></p>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+             @*    <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <span><img src="~/images/blue.png" style="width:20%;height:50%;" /></span>
+                                <span class="line">Production</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <span>
+                                    <img src="~/images/green.png" style="width:20%;height:50%;" />
+                                </span>
+                                <span class="line">Wait Previous</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span>
+                                    <img src="~/images/light-Green.png" style="width:20%;height:50%;" />
+                                </span>
+                                <span class="line">Wait Next</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <span>
+                                    <img src="~/images/light-brown.png" style="width:20%;height:45%;" />
+                                </span>
+                                <span class="line">Changeover</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <span>
+                                    <img src="~/images/brown.png" style="width:20%;height:45%;" />
+                                </span>
+                                <span class="line">Part Supply</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span>
+                                    <img src="~/images/red.png" style="width:20%;height:45%;" />
+
+                                </span>
+                                <span class="line">Mechine Error</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <span>
+                                    <img src="~/images/orange.png" style="width:20%;height:52%;" />
+                                </span>
+                                <span class="line">Operator Downtime</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <span>
+                                    <img src="~/images/purple.png" style="width:20%;height:52%;" />
+                                </span>
+                                <span class="line">Maintenance</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <span>
+                                    <img src="~/images/silvar.png" style="width:20%;height:52%;" />
+                                </span>
+                                <span class="line">Other</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ *@
+
+        </div>
+
+
+    </div>
+</div>
+</div>
+<style>
+    div span{
+        font-size:small;
+    }
+    .line{
+        font-size:63% !important;
+    }
+
+    .highlight {
+        opacity: 1 !important;
+        stroke: #000;
+        stroke-width: 2;
+    }
+
+</style>
+<script>
+    $(document).ready(function () { 
+
+        debugger;
+        // Chart data
+        var chtdata = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModuleUtilization));
+        var chtlabels = chtdata.map(function (item) { return item.Label; });
+        var chtvalues = chtdata.map(function (item) { return item.Value; });
+
+        var dataChart = {
+            labels: chtlabels,
+            datasets: [{
+                //label: chtlabels,
+                data: chtvalues,
+                backgroundColor: [
+                    'rgba(0,0,255)',
+                    'rgba(0,128,0)',
+                    'rgba(0,255,0)',
+                    'rgba(128,128,0)',
+                    'rgba(128,0,0)',
+                    'rgba(255,0,0)',
+                    'rgba(255,255,0)',
+                    'rgba(128,0,128)',
+                    'rgba(192,192,192)'
+
+
+                ],
+                borderColor: [
+                    'rgba(0,0,256)',
+                    'rgba(0,128,1)',
+                    'rgba(0,255,1)',
+                    'rgba(128,128,1)',
+                    'rgba(128,0,1)',
+                    'rgba(255,0,1)',
+                    'rgba(255,255,1)',
+                    'rgba(128,0,129)',
+                    'rgba(192,192,193)'
+
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Chart options
+        var optionsGraph = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+
+        // Get the context of the canvas element
+        var ctxgraph = document.getElementById("myChart").getContext('2d');
+
+        // Create the chart
+        var myChart = new Chart(ctxgraph, {
+            type: 'bar',
+            data: dataChart,
+            options: optionsGraph
+        });
+
+
+
+        var ctxpiechart = document.getElementById('pieChart').getContext('2d');
+        var chartdata = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstLineUtilization));
+        var chrtlabels = chartdata.map(function (item) { return item.Label; });
+        var chrtvalues = chartdata.map(function (item) { return item.Value; });
+
+        var piechart = new Chart(ctxpiechart, {
+            type: 'pie',
+            data: {
+                labels: chrtlabels,
+                datasets: [{
+                    data: chrtvalues,
+                    backgroundColor: [
+                        'rgba(0,0,255)',
+                        'rgba(0,128,0)',
+                        'rgba(0,255,0)',
+                        'rgba(128,128,0)',
+                        'rgba(128,0,0)',
+                        'rgba(255,0,0)',
+                        'rgba(255,255,0)',
+                        'rgba(128,0,128)',
+                        'rgba(192,192,192)'
+
+                    ],
+                    borderColor: [
+                        'rgba(0,0,256)',
+                        'rgba(0,128,1)',
+                        'rgba(0,255,1)',
+                        'rgba(128,128,1)',
+                        'rgba(128,0,1)',
+                        'rgba(255,0,1)',
+                        'rgba(255,255,1)',
+                        'rgba(128,0,129)',
+                        'rgba(192,192,193)'
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        boxWidth: 11,
+                        fontColor: "#757681",
+                        fontSize: 11
+                    }
+                }
+            }
+
+        });
+       // foucus();
+        // debugger;
+        // var segmentIndex = $(this).data('segment');
+        // var chartSegment = piechart.getDatasetMeta(0).data[segmentIndex];
+
+        // // Remove existing highlights
+        // piechart.getDatasetMeta(0).data.forEach(function (segment) {
+        //     segment.element.classList.remove('highlight');
+        // });
+
+        // // Highlight the target segment
+        // chartSegment.element.classList.add('highlight');
+
+        // // Update the chart to reflect changes
+        // piechart.update();
+    });
+
+    function foucus() {
+        debugger;
+        var segmentIndex = $(this).data('segment');
+        var chartSegment = piechart.getDatasetMeta(0).data[segmentIndex];
+
+        // Remove existing highlights
+        piechart.getDatasetMeta(0).data.forEach(function (segment) {
+            segment.element.classList.remove('highlight');
+        });
+
+        // Highlight the target segment
+        chartSegment.element.classList.add('highlight');
+
+        // Update the chart to reflect changes
+        piechart.update();
+
+    }
+
+</script>
