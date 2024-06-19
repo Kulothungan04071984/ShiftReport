@@ -1,0 +1,88 @@
+﻿@model StackedBarChartViewModel
+
+@{
+    ViewData["Title"] = "linewithbar";
+}
+
+<h1>linewithbar</h1>
+
+<canvas id="salesRevenueChart" width="400" height="200"></canvas>
+@* 
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('salesRevenueChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar', // base type is bar
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Select(d => d.Month))),
+                datasets: [{
+                    label: 'Sales',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    data: @Html.Raw(Json.Serialize(Model.Select(d => d.Sales)))
+                },
+                {
+                    label: 'Revenue',
+                    type: 'line', // overlay line chart
+                    fill: false,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    data: @Html.Raw(Json.Serialize(Model.Select(d => d.Revenue)))
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+ *@
+
+@section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+                var ctx = document.getElementById('salesRevenueChart').getContext('2d');
+
+            var chartData = {
+                labels: @Html.Raw(Json.Serialize(Model.Years)),
+                datasets: [
+        @foreach (var category in Model.Categories)
+        {
+            var categoryData = Model.DataGroupedByYear.Select(d => d.SalesByCategory[@Model.Categories.IndexOf(category)]).ToList();
+            <text>
+                {
+                                label: '@category',
+                                data: @Html.Raw(Json.Serialize(categoryData)),
+                                backgroundColor: 'rgba(@(20 + Model.Categories.IndexOf(category) * 50), @(100 + Model.Categories.IndexOf(category) * 30), 255, 0.7)',
+                                borderColor: 'rgba(@(20 + Model.Categories.IndexOf(category) * 50), @(100 + Model.Categories.IndexOf(category) * 30), 255, 1)',
+                                borderWidth: 1
+                            },
+            </text>
+        }
+                ]
+            };
+
+            var salesChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+}
