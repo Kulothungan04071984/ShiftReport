@@ -220,7 +220,7 @@
             }]
         };
 
-        // Chart options
+        // Chart option
         var optionsGraph = {
             scales: {
                 yAxes: [{
@@ -228,6 +228,15 @@
                         beginAtZero: true
                     }
                 }]
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                        }
+                    }
+                }
             }
         };
 
@@ -290,10 +299,20 @@
                         fontColor: "#757681",
                         fontSize: 11
                     }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
                 }
             }
-
         });
+    });
+
        // foucus();
         // debugger;
         // var segmentIndex = $(this).data('segment');
@@ -309,7 +328,6 @@
 
         // // Update the chart to reflect changes
         // piechart.update();
-    });
 
     function foucus() {
         debugger;
