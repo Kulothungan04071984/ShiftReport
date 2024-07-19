@@ -6,13 +6,13 @@
 @* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> *@
 <script src="~/js/chart.js"></script>
 
-@* <script>
+<script>
     $(document).ready(function () {
         setTimeout(function renderCharts() {
             location.reload(true); // Reload the page forcefully
         }, 60000); 
     });
-</script> *@
+</script>
 
 <div style="padding-top:2%;">
 <div class="container">
@@ -426,13 +426,12 @@
 
 <script>
     $(document).ready(function () {
-          setTimeout(function renderCharts() {
-                    location.reload(true); // Reload the chart function forcefully
-          }, 60000);
-          
-
+        setTimeout(function renderCharts() {
+            location.reload(true); // Reload the page forcefully
+        }, 60000);
+    
         // Function to render 
-        debugger;
+     
         $('#lblLine1Error').css('display', 'none');
         $('#lblLine2Error').css('display', 'none');
         $('#lblLine3Error').css('display', 'none');
@@ -446,7 +445,7 @@
 
             var chrtlabels1 = [];
             var chrtvalues1 = [];
-
+           
             if (chartdata1 && chartdata1.length > 0 && chartdata1[0].Label !== "Null") {
                 chrtlabels1 = chartdata1.map(function (item) { return item.Label; });
                 chrtvalues1 = chartdata1.map(function (item) { return item.Value; });
@@ -581,9 +580,9 @@
                             }
                         }
                     }
-                }]
-            }
-        };
+                }
+            });
+        
 
             // Chart 3 (Pie Chart)
             var ctxpiechart3 = document.getElementById('Line3Summary').getContext('2d');
@@ -699,12 +698,27 @@
                     }
                 }
             }
+            var ctxcyct1 = document.getElementById('Cyct1Summary').getContext('2d');
+            var cyct1Chart = new Chart(ctxcyct1, {
+                type: 'bar', // Change type to line chart
+                data: cyctChart1,
+                options: cyctoptions1
+            });
 
-        });
-       // foucus();
-        // debugger;
-        // var segmentIndex = $(this).data('segment');
-        // var chartSegment = piechart.getDatasetMeta(0).data[segmentIndex];
+
+            var cyctdata2 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModule2Utilization));
+            var cyctlabels2 = [];
+            var cycltvalues2 = [];
+
+            if (cyctdata2 && cyctdata2.length > 0 && cyctdata2[0].Label !== "Null") {
+                cyctlabels2 = cyctdata2.map(function (item) { return item.Label; });
+                cycltvalues2 = cyctdata2.map(function (item) { return item.Value; });
+                console.log(cyctdata2);
+            } else {
+
+                $('#lblcyct2Error').css('display', 'block');
+                $('#Cyct2Summary').css('display', 'none');
+            }
 
             var cyctChart2 = {
                 labels: cyctlabels2,
@@ -744,9 +758,16 @@
                 }
             };
 
+            var ctxcyct2 = document.getElementById('Cyct2Summary').getContext('2d');
+            var cyct2Chart = new Chart(ctxcyct2, {
+                type: 'bar', // Change type to line chart
+                data: cyctChart2,
+                options: cyctoptions2
+            });
+
         // // Update the chart to reflect changes
         // piechart.update();
-    });
+    
 
             // Cyct Chart 3 (Line Chart)
             var cyctdata3 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModule3Utilization));
