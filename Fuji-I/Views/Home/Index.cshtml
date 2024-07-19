@@ -2,7 +2,158 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+@* <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div> *@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Hover Canvas</title>
+    @* <link rel="stylesheet" href="styles.css"> *@
+</head>
+<body>
+    <canvas id="myChart" width="600" height="400"></canvas>
+    <div id="tooltip" class="tooltip"></div>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	
+    @* <script src="script.js"></script> *@
+</body>
+</html>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+
+    canvas {
+        border: 1px solid #ccc;
+    }
+
+    .tooltip {
+        position: absolute;
+        display: none;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        pointer-events: none; /* Ensure tooltip does not interfere with mouse events */
+    }
+
+
+</style>
+<script>
+    $(document).ready(function () {
+        debugger;
+        const canvas = document.getElementById('myChart');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+
+        // Sample data for the chart (x-axis values and corresponding y-axis values)
+        const data = [
+            { x: 0, y: 20 },
+            { x: 1, y: 25 },
+            { x: 2, y: 18 },
+            { x: 3, y: 30 },
+            { x: 4, y: 15 },
+            { x: 5, y: 35 }
+        ];
+
+        const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        const width = canvas.width - margin.left - margin.right;
+        const height = canvas.height - margin.top - margin.bottom;
+
+        // Function to draw the chart
+        function drawChart() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Calculate maximum and minimum values for scaling purposes
+            const maxY = Math.max(...data.map(d => d.y));
+            const minY = Math.min(...data.map(d => d.y));
+
+            // Calculate scaling factors
+            const xScale = width / (data.length - 1);
+            const yScale = height / (maxY - minY);
+
+            // Draw x and y axes
+            ctx.beginPath();
+            ctx.moveTo(margin.left, margin.top);
+            ctx.lineTo(margin.left, canvas.height - margin.bottom);
+            ctx.lineTo(canvas.width - margin.right, canvas.height - margin.bottom);
+            ctx.stroke();
+
+            // Draw data points and line
+            ctx.beginPath();
+            ctx.moveTo(margin.left + data[0].x * xScale, canvas.height - margin.bottom - data[0].y * yScale);
+
+            for (let i = 1; i < data.length; i++) {
+                const x = margin.left + data[i].x * xScale;
+                const y = canvas.height - margin.bottom - data[i].y * yScale;
+                ctx.lineTo(x, y);
+            }
+
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Draw circles at data points
+            ctx.fillStyle = 'blue';
+            for (let i = 0; i < data.length; i++) {
+                const x = margin.left + data[i].x * xScale;
+                const y = canvas.height - margin.bottom - data[i].y * yScale;
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Function to show tooltip
+        function showTooltip(x, y, value) {
+            tooltip.style.display = 'block';
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y - 20 + 'px'; // Adjust position so tooltip is above the cursor
+            tooltip.textContent = `Value: ${value}`;
+        }
+
+        // Function to hide tooltip
+        function hideTooltip() {
+            tooltip.style.display = 'none';
+        }
+
+        // Function to handle mouse move event for showing tooltip
+        canvas.addEventListener('mousemove', function (e) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            // Check if mouse is over a data point
+            for (let i = 0; i < data.length; i++) {
+                const x = margin.left + data[i].x * (width / (data.length - 1));
+                const y = canvas.height - margin.bottom - data[i].y * (height / (Math.max(...data.map(d => d.y)) - Math.min(...data.map(d => d.y))));
+
+                const distance = Math.sqrt((mouseX - x) ** 2 + (mouseY - y) ** 2);
+
+                if (distance < 5) { // Adjust this threshold as needed
+                    showTooltip(x, y, data[i].y);
+                    return;
+                }
+            }
+
+            // If not over a data point, hide tooltip
+            hideTooltip();
+        });
+
+        // Initial draw of the chart
+        drawChart();
+
+    });
+
+</script>

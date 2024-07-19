@@ -15,6 +15,9 @@ namespace Fuji_I.Controllers
 
         public IActionResult Index()
         {
+            string message = "Hello from Index action!";
+            Console.WriteLine(message);
+
             return View();
         }
 
@@ -30,3 +33,5 @@ namespace Fuji_I.Controllers
         }
     }
 }
+
+
