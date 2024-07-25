@@ -15,5 +15,13 @@
 
         public List<Module3Utilization> lstModule3Utilization { get; set; }
 
+        public List<OEE1Utilization> lstOEE1Utilization { get; set; }
+
+        public List<OEE2Utilization> lstOEE2Utilization { get; set; }
+
+        public List<OEE3Utilization> lstOEE3Utilization { get; set; }
+
+
+
     }
 }
