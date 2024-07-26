@@ -160,9 +160,9 @@ public class MainPageController : Controller
             lstLine1Utilization = Line1PieData,
             lstLine2Utilization = Line2PieData,
             lstLine3Utilization = Line3PieData,
-            //lstModule1Utilization = Line1CycleData,
-            //lstModule2Utilization = Line2CycleData,
-            //lstModule3Utilization = Line3CycleData,
+            lstModule1Utilization = Line1CycleData,
+            lstModule2Utilization = Line2CycleData,
+            lstModule3Utilization = Line3CycleData,
 
         };
 
