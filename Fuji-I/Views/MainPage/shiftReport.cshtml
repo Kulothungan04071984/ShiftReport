@@ -3,8 +3,16 @@
     ViewData["Title"] = "shiftReport";
 }
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-@* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> *@
-<script src="~/js/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+
+<!-- Example using unpkg CDN -->
+<script src="https://www.jsdelivr.com/package/npm/chartjs-plugin-doughnutlabel-rebourne"></script>
+
+
+
+@* <script src="~/js/chart.js"></script>
+<script src="~/js/chartjs-plugin.js"></script> *@
+
 
 <script>
     $(document).ready(function () {
@@ -496,7 +504,7 @@
           
 
            
-       </div>
+     </div>
 
     @* </div> *@
 </div>
@@ -527,12 +535,8 @@
 </style>
 
 <script>
-    $(document).ready(function () {
-        setTimeout(function renderCharts() {
-            location.reload(true); // Reload the page forcefully
-        }, 60000);
-    
-        // Function to render
+
+    document.addEventListener('DOMContentLoaded', function () {
 
         $('#lblOEE1Error').css('display', 'none');
         $('#lblOEE2Error').css('display', 'none');
@@ -543,202 +547,117 @@
         $('#lblcyct1Error').css('display', 'none');
         $('#lblcyct2Error').css('display', 'none');
         $('#lblcyct3Error').css('display', 'none');
+        // Define the custom plugin to draw text in the center
+        const centerTextPlugin = {
+            id: 'centerText',
+            beforeDraw: function (chart) {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+                const centerX = (chartArea.left + chartArea.right) / 2;
+                const centerY = (chartArea.top + chartArea.bottom) / 2;
+                const fontSize = 20;
+                const fontStyle = 'bold';
+                const fontFamily = 'Arial';
+                const product = chart.options.plugins.centerTextPlugin.product; // Access the product from options
+                ctx.save();
+                ctx.font = `${fontStyle} ${fontSize}px ${fontFamily}`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#000';
+                ctx.fillText(`${product}%`, centerX, centerY); // Draw the product percentage in the center
+                ctx.restore();
+            }
+        };
+
         function renderCharts() {
-            // OEE Charts -1
-            var ctxoeechart1 = document.getElementById('OEELine1').getContext('2d');
-            var oeedata1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE1Utilization));
-
-            var oeelabels1 = [];
-            var oeevalues1 = [];
-
-            if (oeedata1 && oeedata1.length > 0 && oeedata1[0].Label !== "Null") {
-                oeelabels1 = oeedata1.map(function (item) { return item.Label; });
-                oeevalues1 = oeedata1.map(function (item) { return item.Value; });
-                console.log(oeedata1);
-            } else {
-                // console.log(chartdata1);
-                //var errorCardHtml = '<div class="card">Value Error: Data not available</div>';
-                // document.getElementById('Line1Summary').innerHTML = errorCardHtml;
-                // Optionally return here if you want to prevent further rendering
-                // return;
-                $('#lblOEE1Error').css('display', 'block');
-                $('#OEELine1').css('display', 'none');
+            // Helper function to calculate the product of values and format it as a percentage
+            function calculateProduct(values) {
+                // Calculate the product
+                const product1 = values.reduce((acc, value) => acc * value, 1);
+                const product = product1 / 10000;
+                console.log(product);
+                // Convert to percentage and format
+                return (product).toFixed(2); // Two decimal places
             }
 
-            var doughchart1 = new Chart(ctxoeechart1, {
-                type: 'doughnut',
-                data: {
-                    // labels: oeelabels1,
-                    datasets: [{
-                        data: oeevalues1,
-                        backgroundColor: [
-                            'rgba(51, 204, 255)',
-                            'rgba(255, 153, 0)',
-                            'rgba(128,0,128)',
-                    
+            // Function to create a chart
+            function createChart(ctx, data, errorLabel, chartId) {
+                const labels = [];
+                const values = [];
+                let product = 0;
 
+                if (data && data.length > 0 && data[0].Label !== "Null") {
+                    labels.push(...data.map(item => item.Label));
+                    values.push(...data.map(item => item.Value));
+                    product = calculateProduct(values);
+                    console.log(data);
+                } else {
+                    $(`#${errorLabel}`).css('display', 'block');
+                    $(`#${chartId}`).css('display', 'none');
+                }
 
-                        ],
-                        borderColor: [
-                            'rgba(51, 204, 255)',
-                            'rgba(255, 153, 0)',
-                            'rgba(128,0,128)',
-
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: "bottom",
-                        labels: {
-                            boxWidth: 11,
-                            fontColor: "#757681",
-                            fontSize: 11
-                        }
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: values,
+                            backgroundColor: [
+                                'rgba(51, 204, 255)',
+                                'rgba(255, 153, 0)',
+                                'rgba(128, 0, 128)',
+                            ],
+                            borderColor: [
+                                'rgba(51, 204, 255)',
+                                'rgba(255, 153, 0)',
+                                'rgba(128, 0, 128)',
+                            ],
+                            borderWidth: 1,
+                            offset: 10,
+                            borderRadius: 20,
+                        }]
                     },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                    options: {
+                        cutout: '50%',
+                        responsive: true,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                                    }
                                 }
+                            },
+                            legend: {
+                                position: "bottom",
+                                labels: {
+                                    boxWidth: 11,
+                                    fontColor: "#757681",
+                                    fontSize: 11
+                                }
+                            },
+                            centerTextPlugin: {
+                                product: product // Pass the formatted product value to the plugin
                             }
                         }
-                    }
-                }
-            });
-
-            var ctxoeechart2 = document.getElementById('OEELine2').getContext('2d');
-            var oeedata2 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE2Utilization));
-
-            var oeelabels2 = [];
-            var oeevalues2 = [];
-
-            if (oeedata2 && oeedata2.length > 0 && oeedata2[0].Label !== "Null") {
-                oeelabels2 = oeedata2.map(function (item) { return item.Label; });
-                oeevalues2 = oeedata2.map(function (item) { return item.Value; });
-                console.log(oeedata2);
-            } else {
-                // console.log(chartdata1);
-                //var errorCardHtml = '<div class="card">Value Error: Data not available</div>';
-                // document.getElementById('Line1Summary').innerHTML = errorCardHtml;
-                // Optionally return here if you want to prevent further rendering
-                // return;
-                $('#lblOEE2Error').css('display', 'block');
-                $('#OEELine2').css('display', 'none');
-            }
-         
-            var doughchart2 = new Chart(ctxoeechart2, {
-                type: 'doughnut',
-                data: {
-                    // labels: oeelabels2,
-                    datasets: [{
-                        data: oeevalues2,
-                        backgroundColor: [
-                            'rgba(51, 204, 255)',
-                            'rgba(255, 153, 0)',
-                            'rgba(128,0,128)',
-
-
-
-                        ],
-                        borderColor: [
-                            'rgba(51, 204, 255)',
-                            'rgba(255, 153, 0)',
-                            'rgba(128,0,128)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: "bottom",
-                        labels: {
-                            boxWidth: 11,
-                            fontColor: "#757681",
-                            fontSize: 11
-                        }
                     },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            //OEE Chart-3
-            var ctxoeechart3 = document.getElementById('OEELine3').getContext('2d');
-            var oeedata3 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE3Utilization));
-
-            var oeelabels3 = [];
-            var oeevalues3 = [];
-
-            if (oeedata3 && oeedata3.length > 0 && oeedata3[0].Label !== "Null") {
-                oeelabels3 = oeedata3.map(function (item) { return item.Label; });
-                oeevalues3 = oeedata3.map(function (item) { return item.Value; });
-                console.log(oeedata3);
-            } else {
-                // console.log(chartdata1);
-                //var errorCardHtml = '<div class="card">Value Error: Data not available</div>';
-                // document.getElementById('Line1Summary').innerHTML = errorCardHtml;
-                // Optionally return here if you want to prevent further rendering
-                // return;
-                $('#lblOEE3Error').css('display', 'block');
-                $('#OEELine3').css('display', 'none');
+                    plugins: [centerTextPlugin] // Register the custom plugin
+                });
             }
 
-            var doughchart3 = new Chart(ctxoeechart3, {
-                type: 'doughnut',
-                data: {
-                    // labels: oeelabels,
-                    datasets: [{
-                        data: oeevalues3,
-                        backgroundColor: [
-                            'rgba(51, 204, 255)',
-                            'rgba(255, 153, 0)',
-                            'rgba(128,0,128)',
+            // Data and context for OEE Chart - Line 1
+            const ctxOEEChart1 = document.getElementById('OEELine1').getContext('2d');
+            const oeeData1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE1Utilization));
+            createChart(ctxOEEChart1, oeeData1, 'lblOEE1Error', 'OEELine1');
 
+            // Data and context for OEE Chart - Line 2
+            const ctxOEEChart2 = document.getElementById('OEELine2').getContext('2d');
+            const oeeData2 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE2Utilization));
+            createChart(ctxOEEChart2, oeeData2, 'lblOEE2Error', 'OEELine2');
 
-
-                        ],
-                        borderColor: [
-                            'rgba(51, 204, 255)',
-                            'rgba(255, 153, 0)',
-                            'rgba(128,0,128)',
-
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: "bottom",
-                        labels: {
-                            boxWidth: 11,
-                            fontColor: "#757681",
-                            fontSize: 11
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+            // Data and context for OEE Chart - Line 3
+            const ctxOEEChart3 = document.getElementById('OEELine3').getContext('2d');
+            const oeeData3 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE3Utilization));
+            createChart(ctxOEEChart3, oeeData3, 'lblOEE3Error', 'OEELine3');
 
 
 
