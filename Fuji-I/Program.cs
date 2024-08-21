@@ -50,6 +50,7 @@ public class Program
         if (configuration["Logging:LogLevel:Default"] == "Information")
         {
             app.UseExceptionHandler("/Home/Error");
+
             app.UseHsts();
         }
 
@@ -64,7 +65,7 @@ public class Program
         {
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=MainPage}/{action=shiftReport}/{id?}");
+                pattern: "{controller=Login}/{action=Login}/{id?}");
         });
     }
 }
