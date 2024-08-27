@@ -1,3 +1,4 @@
+using Fuji_I.Data;
 using Fuji_I.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
-
+using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 public class Program
 {
     public static void Main(string[] args)
@@ -27,6 +29,10 @@ public class Program
     {
         services.AddControllersWithViews();
         services.AddTransient<Inter_details, services_details>(); // Example service registration
+        services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseMySQL(configuration.GetConnectionString("DefaultConnection")));
+        
+
 
         // Configure Serilog for file logging
         Log.Logger = new LoggerConfiguration()
@@ -65,7 +71,7 @@ public class Program
         {
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=Login}/{id?}");
+                pattern: "{controller=Prod_Data}/{action=Prod_data}/{id?}");
         });
     }
 }
