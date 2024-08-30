@@ -1,64 +1,24 @@
-﻿@* <div>
-    <label for="workOrder">Work Order:</label>
-    <input type="text" id="workOrder" />
-</div>
-<div>
-    <label for="productNo">Product No:</label>
-    <input type="text" id="productNo" readonly />
-</div>
-<div>
-    <label for="qty">Qty:</label>
-    <input type="number" id="qty" readonly />
-</div>
-<div>
-    <label for="uph">UPH:</label>
-    <input type="text" id="uph" readonly />
-</div>
-@* <div>
-    <label for="createdAt">Created At:</label>
-    <input type="text" id="createdAt" readonly />
-</div> *@
-
-@* <script>
-    document.getElementById("workOrder").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            var workOrder = this.value;
-            fetch(`/Prod_Data/GetWorkOrderDetails?workOrder=${workOrder}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data); // Check what is returned
-                    if (data) {
-                        document.getElementById("productNo").value = data.product_no;
-                        document.getElementById("qty").value = data.qty;
-                        document.getElementById("uph").value = data.uph;
-                        // document.getElementById("createdAt").value = new Date(data.created_at).toLocaleDateString();
-                    } else {
-                        alert("Work Order not found!");
-                    }
-                });
-        }
-    });
-
-</script> *@ *
-
-
-
+﻿@model List<string>
 @{
-    Layout = null;
+    ViewData["Title"] = "shiftReport";
+
 }
 <html>
 <head>
     <link href="~/css/style.css" rel="stylesheet" />
 </head>
-<body data-new-gr-c-s-check-loaded="14.1191.0" data-gr-ext-installed>
+<body>
     <section class="form-02-main">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="_lk_de">
                         <div class="form-03-main">
-                            <div class="logo">
+                           @*  <div class="logo">
                                 <img src="~/images/syrmasgs.png" style="margin-left:-70%;" />
+                            </div> *@
+                            <div class="form-group">
+                                @Html.DropDownList(Model.ToString())
                             </div>
                             <div class="form-group">
                                 <label for="workOrder">Work Order:</label>
@@ -87,23 +47,23 @@
 </body>
 </html>
 <script>
-    document.getElementById("workOrder").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            var workOrder = this.value;
-            fetch(`/Prod_Data/GetWorkOrderDetails?workOrder=${workOrder}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data); // Check what is returned
-                    if (data) {
-                        document.getElementById("productNo").value = data.product_no;
-                        document.getElementById("qty").value = data.qty;
-                        document.getElementById("uph").value = data.uph;
-                        // document.getElementById("createdAt").value = new Date(data.created_at).toLocaleDateString();
-                    } else {
-                        alert("Work Order not found!");
-                    }
-                });
-        }
-    });
+    // document.getElementById("workOrder").addEventListener("keydown", function (event) {
+    //     if (event.key === "Enter") {
+    //         var workOrder = this.value;
+    //         fetch(`/Prod_Data/GetWorkOrderDetails?workOrder=${workOrder}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 console.log(data); // Check what is returned
+    //                 if (data) {
+    //                     document.getElementById("productNo").value = data.product_no;
+    //                     document.getElementById("qty").value = data.qty;
+    //                     document.getElementById("uph").value = data.uph;
+    //                     // document.getElementById("createdAt").value = new Date(data.created_at).toLocaleDateString();
+    //                 } else {
+    //                     alert("Work Order not found!");
+    //                 }
+    //             });
+    //     }
+    // });
 
 </script>

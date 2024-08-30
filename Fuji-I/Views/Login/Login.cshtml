@@ -4,6 +4,8 @@
 <html>
     <head>
     <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
     </head>
 <body data-new-gr-c-s-check-loaded="14.1191.0" data-gr-ext-installed>
     <section class="form-02-main">
@@ -16,10 +18,10 @@
                                 <img src="~/images/syrmasgs.png" style="margin-left:-70%;" />
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control _ge_de_ol" placeholder=" Enter User Name" required aria-required="true" />
+                                <input type="text" id="txtuserid" class="form-control _ge_de_ol" placeholder=" Enter User Name" required aria-required="true" />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control _ge_de_ol" placeholder="Enter Password" required aria-required="true" />
+                                <input type="password" id="txtpassword" class="form-control _ge_de_ol" placeholder="Enter Password" required aria-required="true" />
                             </div>
                             <div class="checkbox form-group">
                                 <div class="form-check">
@@ -28,9 +30,9 @@
                                 </div>
                                 <a href="#">Forgot Password</a>
                             </div>
-                            <div class="form-group">
-                                <div class="_btn_04">
-                                    <a href="#">Login</a>
+                            <div class="form-group" onclick="userValidation()" style="cursor:pointer;">
+                                <div class="_btn_04" >
+                                    <a  href="#">Login</a>
                                 </div>
                             </div>
                         </div>
@@ -41,3 +43,36 @@
         </section>
     </body>
 </html>
+<script>
+    function userValidation() {
+        debugger;
+        var uid = $('#txtuserid').val();
+        var pwd = $('#txtpassword').val();
+        $.ajax({
+            url: 'Login/loginValidation',
+            type: 'GET', // or 'GET' depending on your backend
+            dataType: 'json', // expecting JSON response from the server
+            data: {
+                userid: uid,
+                password: pwd
+            },
+            cache: false,
+            success: function (result) {
+                if (result != null) {
+                    if (result == 'valid') {
+                        window.location.href = "MainPage/ShiftReport";
+                    } else if (result == "invalid") {
+                        alert('Please check your username and password');
+                    }
+                }
+            },
+            error: function (result) {
+                alert('An error occurred :'  + result);
+                $('#txtuserid').val('');
+                $('#txtpassword').val('');
+            },
+        });
+
+    }
+</script>
+  
