@@ -1,0 +1,237 @@
+﻿@* @model List<Prod_data>
+@{
+    ViewData["Title"] = "ViewGrid";
+}
+
+<div class="container">
+    <h3>ViewGrid</h3>
+    <section>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-body">
+                    <h5 class="card-title">Hourly Details Grid </h5>
+                    <p class="card-text"></p>
+                    <canvas id="HourlyGrid"></canvas>
+                    <div id="lblHourlyGridError" style="height:19.5em">
+                        <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        debugger;
+   
+    var cyctdata2 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+    var cyctlabels2 = [];
+    var cycltvalues2 = [];
+
+    if (cyctdata2 && cyctdata2.length > 0 && cyctdata2[0].Label !== "Null") {
+        cyctlabels2 = cyctdata2.map(function (item) { return item.Label; });
+        cycltvalues2 = cyctdata2.map(function (item) { return item.Value; });
+        console.log(cyctdata2);
+    } else {
+
+            $('#lblHourlyGridError').css('display', 'block');
+            $('#HourlyGrid').css('display', 'none');
+    }
+
+    var cyctChart2 = {
+        labels: cyctlabels2,
+        datasets: [{
+            label: 'Cycle time',
+            data: cycltvalues2, // Assuming cycltvalues1 has at least 2 values
+            backgroundColor: [
+                'rgba(17, 188, 249, 0.8)', // Blue with transparency
+                'rgba(71, 222, 17, 0.8)' // Green with transparency
+            ],
+            borderColor: [
+                'rgba(17, 188, 249, 0.8)', // Solid blue border
+                'rgba(71, 222, 17, 0.8)' // Solid green border
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    var cyctoptions2 = {
+        responsive: true,
+        legend: {
+            position: "bottom",
+            labels: {
+                boxWidth: 11,
+                fontColor: "#757681",
+                fontSize: 11
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw + 'sec';
+                    }
+                }
+            }
+        }
+    };
+
+        var ctxcyct2 = document.getElementById('HourlyGrid').getContext('2d');
+    var cyct2Chart = new Chart(ctxcyct2, {
+        type: 'bar', // Change type to line chart
+        data: cyctChart2,
+        options: cyctoptions2
+    });
+
+</script>
+
+
+ *@
+
+@model List<HourlyData>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourly Stacked Bar Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+           /*  max-width: 1300px; */
+            margin: auto;
+            height:100% !important;
+            width: 90% !important;
+
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+       
+        <section>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body">
+                        <h5 class="card-title">Hourly Line Details </h5>
+                        <p class="card-text"></p>
+                        <canvas id="HourlyBarChart"></canvas>
+                     @*    <div id="lblHourlyGridError"  style="height:19.5em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+   @*  <h2>Hourly Actual vs Target Stacked Bar Chart</h2>
+    <canvas id="HourlyBarChart" ></canvas> *@
+
+    <script>
+
+        const alwaysShowToolTip = {
+            Id: 'alwaysShowToolTip',
+            afterDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.save();
+                console.log(chart)
+                chart.data.datasets.forEach((datasets, i) => {
+                    chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
+                        const { x, y } = datapoint.tooltipPosition();
+                        //console.log(datapoint.tooltipPosition());
+                        // ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                        // debugger;
+                        //console.log(chart.data);
+
+                        //const text = chart.data.labels[index] + ': ' + chart.data.datasets[i].data[index];
+                        const text = chart.data.datasets[i].data[index] + ' %';
+                        const textWidth = ctx.measureText(text).width;
+
+                        ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                        width = 20;
+                        ctx.fillRect(x - ((textWidth + 10) / 2), y - 25, textWidth + 10, 20);
+
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x - 5, y - 5);
+                        ctx.lineTo(x + 5, y - 5);
+                        ctx.fill();
+                        ctx.restore();
+
+
+                        ctx.font = '15px Arial';
+                        ctx.fillStyle = 'white';
+                        ctx.fillText(text, x - (textWidth / 2), y - 11);
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+
+        const labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => $"{data.Date:yyyy-MM-dd} {data.Hour}:00")));
+        const actualValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.Actual)));
+        const targetValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.Target)));
+
+        const ctx = document.getElementById('HourlyBarChart').getContext('2d');
+        const myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Actual',
+                        data: actualValues,
+                        backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Target',
+                        data: targetValues,
+                        backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Date & Hour'
+                        }
+                    },
+                    y: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Values'
+                        },
+                        beginAtZero: true
+                    }
+                },
+            //},
+            plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                const label = tooltipItem.dataset.label || '';
+                                const value = tooltipItem.raw;
+                                return `${label}: ${value}`; // Customize tooltip text
+                            }
+                        }
+                    }
+                }
+            },
+            plugins: [alwaysShowToolTip]
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@model List<Prod_data>
+@{
+    ViewData["Title"] = "ProductionData";
+}
+
+<h1>ProductionData</h1>
+<div class="container mt-3">
+    <section>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Hour</th>
+                        <th>FG Name</th>
+                        <th>Target</th>
+                        <th>Actual</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        @if(Model != null)
+                        {
+                        @foreach (var item in Model)
+                        {
+                            <td>@item.CurrentDate</td>
+                            <td>@item.Hour</td>
+                            <td>@item.FG_Name</td>
+                            <td>@item.Target</td>
+                            <td>@item.Actual</td>
+                        }
+                            
+                            }
+                            else
+                            {
+                                <td colspan="5" style="text-align:center;">Nodata</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    
+</div>
+

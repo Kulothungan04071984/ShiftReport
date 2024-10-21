@@ -25,11 +25,11 @@ namespace Fuji_I.Models
             {
                 using (SqlConnection conn = new SqlConnection(_connectionstring))
                 {
-                    using (SqlCommand cmd = new SqlCommand("pro_userlogin", conn))
+                    using (SqlCommand cmd = new SqlCommand("pro_getLoginDetails", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@userid", userid);
-                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.Parameters.AddWithValue("@empid", userid);
+                        cmd.Parameters.AddWithValue("@pwd", password);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         da.Fill(dt);
                     }
@@ -41,6 +41,44 @@ namespace Fuji_I.Models
             {
                 return dt;
             }
+        }
+
+        public List<Prod_data> getLineDetails(string currentdate)
+        {
+            dt=new DataTable();
+            Prod_data objdata;
+            List<Prod_data> lstdata=new List<Prod_data>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                {
+                    using (SqlCommand cmd = new SqlCommand("pro_getLineDetails", conn))
+                    {
+                        cmd.CommandType= CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@currendata", currentdate);
+                        SqlDataAdapter sqlda=new SqlDataAdapter (cmd);
+                        sqlda.Fill(dt);
+                        if (dt.Rows.Count > 0) {
+                            foreach (DataRow row in dt.Rows) {
+                                objdata=new Prod_data();
+                                objdata.CurrentDate = row["CurrentDate"].ToString();
+                                objdata.Hour = row["CurrentHour"].ToString();
+                                objdata.FG_Name = row["FG_Name"].ToString();
+                                objdata.Target = Convert.ToInt32(row["BoardTarget"].ToString());
+                                objdata.Actual = row["BoardActual"].ToString();
+                                lstdata.Add(objdata);
+                            }
+                        }
+
+                    }
+                }
+                return lstdata;
+            }
+            catch (Exception ex)
+            {
+                return new List<Prod_data>();
+            }
+           
         }
 
         public List<string> getCustomerDetails()
@@ -68,6 +106,7 @@ namespace Fuji_I.Models
                     return result;
                 }
             }
+
             catch(Exception ex)
             {
                 return result;
@@ -105,36 +144,36 @@ namespace Fuji_I.Models
                 return lstWorkOrderNumber;
             }
         }
-        public Prod_data getFgDetails(int workordernumber)
-        {
-            Prod_data objDate = new Prod_data();
-            try
-            {
-                using (SqlConnection pro_con = new SqlConnection(_connectionstring))
-                {
-                    using (SqlCommand pro_cmd = new SqlCommand("pro_getfgdetails", pro_con))
-                    {
-                        pro_cmd.CommandType = CommandType.StoredProcedure;
-                        pro_cmd.Parameters.AddWithValue("@workorderno",workordernumber);
-                        dt = new DataTable();
-                        da = new SqlDataAdapter(pro_cmd);
-                        da.Fill(dt) ;
-                        if (dt.Rows.Count > 0)
-                        {
-                            objDate.FG_Name = dt.Rows[0]["FgName"].ToString();
-                            objDate.WO_Quantity= dt.Rows[0]["Quantity"].ToString();
-                        }
+        //public Prod_data getFgDetails(int workordernumber)
+        //{
+        //    Prod_data objDate = new Prod_data();
+        //    try
+        //    {
+        //        using (SqlConnection pro_con = new SqlConnection(_connectionstring))
+        //        {
+        //            using (SqlCommand pro_cmd = new SqlCommand("pro_getfgdetails", pro_con))
+        //            {
+        //                pro_cmd.CommandType = CommandType.StoredProcedure;
+        //                pro_cmd.Parameters.AddWithValue("@workorderno",workordernumber);
+        //                dt = new DataTable();
+        //                da = new SqlDataAdapter(pro_cmd);
+        //                da.Fill(dt) ;
+        //                if (dt.Rows.Count > 0)
+        //                {
+        //                    objDate.FG_Name = dt.Rows[0]["FgName"].ToString();
+        //                    objDate.WO_Quantity= dt.Rows[0]["Quantity"].ToString();
+        //                }
 
-                    }
-                }
+        //            }
+        //        }
 
-                return objDate;
+        //        return objDate;
 
-            }
-            catch(Exception ex)
-            {
-                return objDate;
-            }
-        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return objDate;
+        //    }
+        //}
     }
 }

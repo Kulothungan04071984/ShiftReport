@@ -569,6 +569,45 @@
             }
         };
 
+        const alwaysShowToolTip = {
+            Id: 'alwaysShowToolTip',
+            afterDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.save();
+                console.log(chart)
+                chart.data.datasets.forEach((datasets, i) => {
+                    chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
+                        const { x, y } = datapoint.tooltipPosition();
+                        //console.log(datapoint.tooltipPosition());
+                        // ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                        // debugger;
+                        //console.log(chart.data);
+
+                        //const text = chart.data.labels[index] + ': ' + chart.data.datasets[i].data[index];
+                        const text = chart.data.datasets[i].data[index] + ' %';
+                        const textWidth = ctx.measureText(text).width;
+
+                        ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                        width = 20;
+                        ctx.fillRect(x - ((textWidth + 10) / 2), y - 25, textWidth + 10, 20);
+
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x - 5, y - 5);
+                        ctx.lineTo(x + 5, y - 5);
+                        ctx.fill();
+                        ctx.restore();
+
+
+                        ctx.font = '15px Arial';
+                        ctx.fillStyle = 'white';
+                        ctx.fillText(text, x - (textWidth / 2), y - 11);
+                        ctx.restore();
+                    });
+                });
+            }
+        };
+
         function renderCharts() {
             // Helper function to calculate the product of values and format it as a percentage
             function calculateProduct(values) {
@@ -640,7 +679,7 @@
                             }
                         }
                     },
-                    plugins: [centerTextPlugin] // Register the custom plugin
+                    plugins: [centerTextPlugin, alwaysShowToolTip] // Register the custom plugin
                 });
             }
 
@@ -682,6 +721,7 @@
                 $('#Line1Summary').css('display', 'none');
             }
 
+           
             var piechart1 = new Chart(ctxpiechart1, {
                 type: 'pie',
                 data: {
@@ -699,7 +739,7 @@
                             'rgba(128,0,128)',
                             'rgba(192,192,192)',
                             'rgba(195, 255, 104)'
-                            
+
 
                         ],
                         borderColor: [
@@ -729,15 +769,18 @@
                     },
                     plugins: {
                         tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                                }
-                            }
-                        }
+                            enable: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
                     }
-                }
+                },
+                plugins: [alwaysShowToolTip]
+
             });
+
+          
 
             // Chart 2 (Pie Chart)
             var ctxpiechart2 = document.getElementById('Line2Summary').getContext('2d');
@@ -801,14 +844,14 @@
                     },
                     plugins: {
                         tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                                }
-                            }
-                        }
+                            enable: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
                     }
-                }
+                },
+                plugins: [alwaysShowToolTip]
             });
         
 
@@ -875,14 +918,15 @@
                     },
                     plugins: {
                         tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
-                                }
-                            }
-                        }
-                    }
-                }
+                            enable: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
+                    },
+                   
+                },
+                plugins: [alwaysShowToolTip]
             });
 
             // Cyct Chart 1 (Line Chart)
@@ -929,20 +973,20 @@
                 },
                 plugins: {
                     tooltip: {
-                        callbacks: {
-                            label: function (tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw + 'sec';
-                            }
-                        }
-                    }
-                }
+                        enable: false,
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
             };
             
             var ctxcyct1 = document.getElementById('Cyct1Summary').getContext('2d');
             var cyct1Chart = new Chart(ctxcyct1, {
                 type: 'bar', // Change type to line chart
                 data: cyctChart1,
-                options: cyctoptions1
+                options: cyctoptions1,
+                plugins: [alwaysShowToolTip]
             });
 
 
@@ -989,20 +1033,20 @@
                 },
                 plugins: {
                     tooltip: {
-                        callbacks: {
-                            label: function (tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw + 'sec';
-                            }
-                        }
-                    }
-                }
+                        enable: false,
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
             };
 
             var ctxcyct2 = document.getElementById('Cyct2Summary').getContext('2d');
             var cyct2Chart = new Chart(ctxcyct2, {
                 type: 'bar', // Change type to line chart
                 data: cyctChart2,
-                options: cyctoptions2
+                options: cyctoptions2,
+                plugins: [alwaysShowToolTip]
             });
 
         // // Update the chart to reflect changes
@@ -1053,20 +1097,20 @@
                 },
                 plugins: {
                     tooltip: {
-                        callbacks: {
-                            label: function (tooltipItem) {
-                                return tooltipItem.label + ': ' + tooltipItem.raw + 'sec';
-                            }
-                        }
-                    }
-                }
+                        enable: false,
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
             };
 
             var ctxcyct3 = document.getElementById('Cyct3Summary').getContext('2d');
             var cyct3Chart = new Chart(ctxcyct3, {
                 type: 'bar', // Change type to line chart
                 data: cyctChart3,
-                options: cyctoptions3
+                options: cyctoptions3,
+                plugins: [alwaysShowToolTip]
             });
 
            

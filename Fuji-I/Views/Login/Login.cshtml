@@ -30,7 +30,7 @@
                                 </div>
                                 <a href="#">Forgot Password</a>
                             </div>
-                            <div class="form-group" onclick="userValidation()" style="cursor:pointer;">
+                            <div class="form-group" id="userlogin" onclick="userValidation()" style="cursor:pointer;">
                                 <div class="_btn_04" >
                                     <a  href="#">Login</a>
                                 </div>
@@ -44,8 +44,16 @@
     </body>
 </html>
 <script>
-    function userValidation() {
+    $(document).ready(function () {
         debugger;
+        $('#userlogin').keydown(function (event) {
+            debugger;
+            if (event.key === "Enter") {
+                userValidation();
+            }
+        });
+    });
+    function userValidation() {
         var uid = $('#txtuserid').val();
         var pwd = $('#txtpassword').val();
         $.ajax({
