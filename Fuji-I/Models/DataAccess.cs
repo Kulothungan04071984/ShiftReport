@@ -81,6 +81,91 @@ namespace Fuji_I.Models
            
         }
 
+
+        public List<Work_order> getWorkOrderDetails(string currentdate)
+        {
+            dt = new DataTable();
+            Work_order Work_order_data;
+            List<Work_order> Work_order_list = new List<Work_order>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                {
+                    using (SqlCommand cmd = new SqlCommand("pro_getWorkOrderDetails", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@currendata", currentdate);
+                        SqlDataAdapter sqlda = new SqlDataAdapter(cmd);
+                        sqlda.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                Work_order_data = new Work_order();
+                                Work_order_data.LineDetaileID = Convert.ToInt32(row["LineDetaileID"].ToString());
+                                Work_order_data.WorkOrderNumber = row["WorkOrderNumber"].ToString();
+                                Work_order_data.FG_Number = row["FG_Number"].ToString();
+                                Work_order_data.Qty = Convert.ToInt32(row["Qty"].ToString());
+                                Work_order_data.Cycle_time = Convert.ToInt32(row["CycleTime"].ToString());
+                                Work_order_data.uph =Convert.ToInt32(row["uph"].ToString());
+                                Work_order_data.CurrentDate = row["CurrentDate"].ToString();
+
+                                Work_order_list.Add(Work_order_data);
+                            }
+                        }
+
+                    }
+                }
+                return Work_order_list;
+            }
+            catch (Exception ex)
+            {
+                return new List<Work_order>();
+            }
+
+        }
+
+
+        public List<Daily_report> getDailyOutputDetails(string currentdate)
+        {
+            dt = new DataTable();
+            Daily_report Daily_report_data;
+            List<Daily_report> Daily_report_list = new List<Daily_report>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                {
+                    using (SqlCommand cmd = new SqlCommand("pro_getDailyOutputDetails", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@currendata", currentdate);
+                        SqlDataAdapter sqlda = new SqlDataAdapter(cmd);
+                        sqlda.Fill(dt);
+                        if (dt.Rows.Count > 0)
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                Daily_report_data = new Daily_report();
+                                Daily_report_data.FG_Name = row["FG_Name"].ToString();
+                                Daily_report_data.CurrentDate = Convert.ToDateTime( row["CurrentDate"]);
+                                Daily_report_data.BoardActual = Convert.ToInt32(row["BoardActual"]);
+
+                                Daily_report_list.Add(Daily_report_data);
+                            }
+                        }
+
+                    }
+                }
+                return Daily_report_list;
+            }
+            catch (Exception ex)
+            {
+                return new List<Daily_report>();
+            }
+
+        }
+
+
         public List<string> getCustomerDetails()
         {
             List<string> result = new List<string>();
