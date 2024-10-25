@@ -1,4 +1,6 @@
 ﻿//using Fuji_I.Data;
+using DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Vml;
 using Fuji_I.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +9,7 @@ namespace Fuji_I.Controllers
 {
     public class ProdDataController : Controller
     {
-      //  private readonly ApplicationDbContext _context;
+        //  private readonly ApplicationDbContext _context;
 
         //public ProdDataController(ApplicationDbContext context)
         //{
@@ -77,21 +79,59 @@ namespace Fuji_I.Controllers
                 }
             }
 
-        //    var hourlyData = new List<HourlyData>
-        //{
-        //    new HourlyData { Date = DateTime.Today, Hour = 0, Actual = 5, Target = 10 },
-        //    new HourlyData { Date = DateTime.Today, Hour = 1, Actual = 15, Target = 20 },
-        //    new HourlyData { Date = DateTime.Today, Hour = 2, Actual = 10, Target = 30 },
-        //    new HourlyData { Date = DateTime.Today, Hour = 3, Actual = 20, Target = 15 },
-        //    // Add more data as needed
-        //};
+            //    var hourlyData = new List<HourlyData>
+            //{
+            //    new HourlyData { Date = DateTime.Today, Hour = 0, Actual = 5, Target = 10 },
+            //    new HourlyData { Date = DateTime.Today, Hour = 1, Actual = 15, Target = 20 },
+            //    new HourlyData { Date = DateTime.Today, Hour = 2, Actual = 10, Target = 30 },
+            //    new HourlyData { Date = DateTime.Today, Hour = 3, Actual = 20, Target = 15 },
+            //    // Add more data as needed
+            //};
 
             return View(hoursData);
         }
 
-      
 
+        public IActionResult WorkOrder()
+        {
+            // var customerlist=_dataAccess.getCustomerDetails();
+            // string curdate = DateTime.Today.ToString();
+            string curdate = string.Empty;
+            var linedetailsdata = _dataAccess.getWorkOrderDetails(curdate);
+            return View(linedetailsdata);
+        }
+
+        public IActionResult Dailyreport()
+        {
+            // var customerlist=_dataAccess.getCustomerDetails();
+            // string curdate = DateTime.Today.ToString();
+            string curdate = string.Empty;
+            var DailyOutputdata = _dataAccess.getDailyOutputDetails(curdate);
+            return View(DailyOutputdata);
+        }
+
+        [HttpPost]
+        public IActionResult ViewGrid2()
+        {
+            string curdate = string.Empty;
+            var DailyOutputdata = _dataAccess.getDailyOutputDetails(curdate);
+            List<Dailyreport> Dailydata = new List<Dailyreport>();
+            Dailyreport objdaily;
+            if (DailyOutputdata != null && DailyOutputdata.Count > 0)
+            {
+                foreach (var data in DailyOutputdata)
+                {
+                    objdaily = new Dailyreport();
+                    objdaily.FG_Name = (data.FG_Name).ToString();
+                    objdaily.CurrentDate = Convert.ToDateTime(data.CurrentDate);
+                    objdaily.BoardActual = Convert.ToInt32(data.BoardActual);
+                    Dailydata.Add(objdaily);
+
+                }
+            }
+            return View(Dailydata);
+
+        }
 
     }
-
 }

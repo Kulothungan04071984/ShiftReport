@@ -1,0 +1,68 @@
+﻿@model List<Work_order>
+@{
+    ViewData["Title"] = "Work_Order_data";
+}
+
+
+<div class="container mt-3">
+    <h2 style="padding:1%;">Work Order Details</h2>
+    <section>
+        <form asp-action="ViewGrid" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div style="height:250px">
+                        <div style="height:420px;overflow-x:scroll;">
+
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>LineDetaileID</th>
+                                        <th>WorkOrderNumber</th>
+                                        <th>FG_Number</th>
+                                        <th>Qty</th>
+                                        <th>Cycle Time</th>
+                                        <th>uph</th>
+                                        <th>CurrentDate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model != null)
+                                    {
+                                        @foreach (var wo_item in Model)
+                                        {
+                                            <tr>
+                                                <td>@wo_item.LineDetaileID</td>
+                                                <td>@wo_item.WorkOrderNumber</td>
+                                                <td>@wo_item.FG_Number</td>
+                                                <td>@wo_item.Qty</td>
+                                                <td>@wo_item.Cycle_time</td>
+                                                <td>@wo_item.uph</td>
+                                                <td>@wo_item.CurrentDate</td>
+                                            </tr>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="5" style="text-align:center;">Nodata</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding-top:15%;">
+@*                 <div class="col-lg-12" style="text-align:right;">
+                    <input type="submit" class="btn btn-primary" id="btnViewGrid" name="View Grid" value="View Grid" />
+                </div> *@
+            </div>
+        </form>
+    </section>
+
+</div>
+
