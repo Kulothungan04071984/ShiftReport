@@ -172,11 +172,13 @@
                 });
             }
         };
-
-        const labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => $"{data.CurrentDate:yyyy-MM-dd} {data.FG_Name}:00")));
+        debugger;
+        
+       
+        const labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => $"{data.CurrentDate:yyyy-MM-dd} {data.FG_Name}")));
         const actualValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.BoardActual)));
- 
-
+        const FGvalues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.FG_Name)));
+        
         const ctx = document.getElementById('DailyBarChart').getContext('2d');
         const myBarChart = new Chart(ctx, {
             type: 'bar',
@@ -190,26 +192,26 @@
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     },
-                    // {
-                    //     label: 'FG_name',
-                    //     data: targetValues,
-                    //     backgroundColor: 'rgba(255, 99, 132, 0.8)',
-                    //     borderColor: 'rgba(255, 99, 132, 1)',
-                    //     borderWidth: 1
-                    // }
+                    {
+                        label: 'FG_name',
+                        data: FGvalues,
+                        backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
                 ]
             },
             options: {
                 scales: {
                     x: {
-                        stacked: true,
+                        // stacked: true,
                         title: {
                             display: true,
                             text: 'Date & Hour'
                         }
                     },
                     y: {
-                        stacked: true,
+                        // stacked: true,
                         title: {
                             display: true,
                             text: 'Values'
@@ -220,13 +222,7 @@
             //},
             plugins: {
                     tooltip: {
-                        callbacks: {
-                            label: function (tooltipItem) {
-                                const label = tooltipItem.dataset.label || '';
-                                const value = tooltipItem.raw;
-                                return `${label}: ${value}`; // Customize tooltip text
-                            }
-                        }
+                       enable:false,
                     }
                 }
             },

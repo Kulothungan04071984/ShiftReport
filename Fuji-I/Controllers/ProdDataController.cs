@@ -117,9 +117,9 @@ namespace Fuji_I.Controllers
             var DailyOutputdata = _dataAccess.getDailyOutputDetails(curdate);
             List<Dailyreport> Dailydata = new List<Dailyreport>();
             Dailyreport objdaily;
-            if (Dailydata != null && Dailydata.Count > 0)
+            if (DailyOutputdata != null && DailyOutputdata.Count > 0)
             {
-                foreach (var data in Dailydata)
+                foreach (var data in DailyOutputdata)
                 {
                     objdaily = new Dailyreport();
                     objdaily.FG_Name = (data.FG_Name).ToString();
