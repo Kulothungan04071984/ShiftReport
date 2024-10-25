@@ -40,5 +40,18 @@ namespace Fuji_I.Controllers
            // res = "valid"; //Testing
             return Json(res);
         }
+        [HttpPost]
+        public JsonResult UpdatePassword(string userid, string password)
+        {
+            try
+            {
+                var result=_dataAccess.UpdatePassword(userid, password);
+                return Json(result);
+            }
+            catch (Exception ex) { 
+                return Json(ex);
+            }
+        }
     }
 }
+

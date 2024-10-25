@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Humanizer;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Fuji_I.Models
 {
@@ -142,6 +143,31 @@ namespace Fuji_I.Models
             catch (Exception ex)
             {
                 return lstWorkOrderNumber;
+            }
+        }
+
+        public int UpdatePassword(string empid, string password)
+        {
+            int updateResult = 0;
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(_connectionstring))
+                {
+                    using (SqlCommand com_password = new SqlCommand("pro_UpdatePassword", sqlConnection))
+                    {
+                        com_password.CommandType = CommandType.StoredProcedure;
+                        com_password.Parameters.AddWithValue("@empid", empid);
+                        com_password.Parameters.AddWithValue("@Password", password);
+                        sqlConnection.Open();
+                        updateResult = com_password.ExecuteNonQuery();
+                        sqlConnection.Close();
+                        return updateResult;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return updateResult;
             }
         }
         //public Prod_data getFgDetails(int workordernumber)
