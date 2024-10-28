@@ -72,7 +72,7 @@ public class Program
         {
             endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=MainPage}/{action=ShiftReport}/{id?}");
+                pattern: "{controller=Login}/{action=Login}/{id?}");
         });
     }
 }
