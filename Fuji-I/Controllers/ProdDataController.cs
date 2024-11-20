@@ -54,7 +54,8 @@ namespace Fuji_I.Controllers
         {
             // var customerlist=_dataAccess.getCustomerDetails();
             // string curdate = DateTime.Today.ToString();
-            string curdate = string.Empty;
+            string curdate = DateOnly.FromDateTime(DateTime.Now).ToString("dd-MM-yyyy"); 
+
             var linedata = _dataAccess.getLineDetails(curdate);
             return View(linedata);
         }
@@ -62,7 +63,8 @@ namespace Fuji_I.Controllers
         [HttpPost]
         public IActionResult ViewGrid()
         {
-            var linedata = _dataAccess.getLineDetails(string.Empty);
+            string curdate = DateOnly.FromDateTime(DateTime.Now).ToString("dd-MM-yyyy");
+            var linedata = _dataAccess.getLineDetails(curdate);
             List<HourlyData> hoursData = new List<HourlyData>();
             HourlyData objHour;
             if (linedata != null && linedata.Count > 0)
@@ -70,10 +72,12 @@ namespace Fuji_I.Controllers
                 foreach (var line in linedata)
                 {
                     objHour = new HourlyData();
-                    objHour.Date = Convert.ToDateTime(line.CurrentDate);
+                    objHour.CurrentDate= line.CurrentDate;
                     objHour.Hour = Convert.ToInt32(line.Hour);
-                    objHour.Target = Convert.ToInt32(line.Target);
-                    objHour.Actual = Convert.ToInt32(line.Actual);
+                    objHour.WorkOrder=line.WorkOrder;
+                    objHour.FG_Name=line.FG_Name;
+                    //objHour.Target = Convert.ToInt32(line.Target);
+                    objHour.PCB_COUNT = Convert.ToInt32(line.PCB_COUNT);
                     hoursData.Add(objHour);
 
                 }
@@ -105,7 +109,7 @@ namespace Fuji_I.Controllers
         {
             // var customerlist=_dataAccess.getCustomerDetails();
             // string curdate = DateTime.Today.ToString();
-            string curdate = string.Empty;
+            string curdate = DateOnly.FromDateTime(DateTime.Now).ToString("dd-MM-yyyy");
             var DailyOutputdata = _dataAccess.getDailyOutputDetails(curdate);
             return View(DailyOutputdata);
         }
@@ -113,7 +117,7 @@ namespace Fuji_I.Controllers
         [HttpPost]
         public IActionResult ViewGrid2()
         {
-            string curdate = string.Empty;
+            string curdate = DateOnly.FromDateTime(DateTime.Now).ToString("dd-MM-yyyy");
             var DailyOutputdata = _dataAccess.getDailyOutputDetails(curdate);
             List<Dailyreport> Dailydata = new List<Dailyreport>();
             Dailyreport objdaily;
@@ -123,8 +127,8 @@ namespace Fuji_I.Controllers
                 {
                     objdaily = new Dailyreport();
                     objdaily.FG_Name = (data.FG_Name).ToString();
-                    objdaily.CurrentDate = Convert.ToDateTime(data.CurrentDate);
-                    objdaily.BoardActual = Convert.ToInt32(data.BoardActual);
+                    objdaily.CurrentDate = (data.CurrentDate).ToString();
+                    objdaily.PCB_COUNT = Convert.ToInt32(data.PCB_COUNT);
                     Dailydata.Add(objdaily);
 
                 }

@@ -16,10 +16,9 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-
-                            <th>FG Name</th>
                             <th>CurrentDate</th>
-                            <th>BoardActual</th>
+                            <th>FG Name</th>
+                            <th>PCB_COUNT</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,9 +28,9 @@
                                 @foreach (var item in Model)
                                 {
                                 <tr>
-                                    <td>@item.FG_Name</td>
                                     <td>@item.CurrentDate</td>
-                                    <td>@item.BoardActual</td>
+                                    <td>@item.FG_Name</td>
+                                    <td>@item.PCB_COUNT</td>
                                 </tr>
                                 }
 

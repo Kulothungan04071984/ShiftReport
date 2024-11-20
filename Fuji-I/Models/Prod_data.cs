@@ -1,4 +1,6 @@
-﻿namespace Fuji_I.Models
+﻿using System.Drawing;
+
+namespace Fuji_I.Models
 {
     public class Prod_data
     {
@@ -9,11 +11,13 @@
         public string FG_Name { get; set; }
         public int Target {  get; set; }
         public string Actual { get; set; }
+        public string WorkOrder { get; set; }
+        public int PCB_COUNT { get; set; }
 
        // public List<Prod_data> lstProd { get; set; }
-        //public string Workorder_no { get; set; }
-    
-   
+       //public string Workorder_no { get; set; }
+
+
         //public string WO_Quantity  { get; set; }
         //public string uph { get; set; }
 
@@ -28,9 +32,13 @@
     public class HourlyData
     {
         public DateTime Date { get; set; }
+        public string CurrentDate { get; set; }
         public int Hour { get; set; }
         public int Actual { get; set; }
         public int Target { get; set; }
+        public string WorkOrder { get; set; }
+        public string FG_Name { get; set; }
+        public int PCB_COUNT { get; set; }
     }
 
     public class Item

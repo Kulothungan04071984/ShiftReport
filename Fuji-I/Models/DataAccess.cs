@@ -10,11 +10,13 @@ namespace Fuji_I.Models
 {
     public class DataAccess
     {
-        private readonly string _connectionstring;
+        private readonly string _connectionstring1;
+        private readonly string _connectionstring2;
 
         public DataAccess(IConfiguration configuration)
         {
-            _connectionstring = configuration.GetConnectionString("DefaultConnection");
+            _connectionstring1 = configuration.GetConnectionString("DefaultConnection");
+            _connectionstring2 = configuration.GetConnectionString("ProdDataConnection");
         }
         DataTable dt;
         SqlDataAdapter da;
@@ -24,7 +26,7 @@ namespace Fuji_I.Models
             dt = new DataTable();
             try
             {
-                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                using (SqlConnection conn = new SqlConnection(_connectionstring1))
                 {
                     using (SqlCommand cmd = new SqlCommand("pro_getLoginDetails", conn))
                     {
@@ -51,22 +53,23 @@ namespace Fuji_I.Models
             List<Prod_data> lstdata=new List<Prod_data>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                using (SqlConnection conn = new SqlConnection(_connectionstring2))
                 {
-                    using (SqlCommand cmd = new SqlCommand("pro_getLineDetails", conn))
+                    using (SqlCommand cmd = new SqlCommand("DIGI_SMTDASHBOARD_AOI", conn))
                     {
                         cmd.CommandType= CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@currendata", currentdate);
+                        cmd.Parameters.AddWithValue("@datarep", "INDIVIDUAL");
+                        cmd.Parameters.AddWithValue("@from_date", currentdate);
                         SqlDataAdapter sqlda=new SqlDataAdapter (cmd);
                         sqlda.Fill(dt);
                         if (dt.Rows.Count > 0) {
                             foreach (DataRow row in dt.Rows) {
                                 objdata=new Prod_data();
                                 objdata.CurrentDate = row["CurrentDate"].ToString();
-                                objdata.Hour = row["CurrentHour"].ToString();
-                                objdata.FG_Name = row["FG_Name"].ToString();
-                                objdata.Target = Convert.ToInt32(row["BoardTarget"].ToString());
-                                objdata.Actual = row["BoardActual"].ToString();
+                                objdata.Hour = row["Hour"].ToString();
+                                objdata.WorkOrder = row["WorkOrder"].ToString();
+                                objdata.FG_Name = (row["FG_Name"].ToString());
+                                objdata.PCB_COUNT = Convert.ToInt32(row["PCB_COUNT"].ToString());
                                 lstdata.Add(objdata);
                             }
                         }
@@ -90,9 +93,9 @@ namespace Fuji_I.Models
             List<Work_order> Work_order_list = new List<Work_order>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                using (SqlConnection conn = new SqlConnection(_connectionstring2))
                 {
-                    using (SqlCommand cmd = new SqlCommand("pro_getWorkOrderDetails", conn))
+                    using (SqlCommand cmd = new SqlCommand("DIGI_SMTDASHBOARD_AOI", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@currendata", currentdate);
@@ -134,12 +137,13 @@ namespace Fuji_I.Models
             List<Daily_report> Daily_report_list = new List<Daily_report>();
             try
             {
-                using (SqlConnection conn = new SqlConnection(_connectionstring))
+                using (SqlConnection conn = new SqlConnection(_connectionstring2))
                 {
-                    using (SqlCommand cmd = new SqlCommand("pro_getDailyOutputDetails", conn))
+                    using (SqlCommand cmd = new SqlCommand("DIGI_SMTDASHBOARD_AOI", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@currendata", currentdate);
+                        cmd.Parameters.AddWithValue("@datarep", "TOTAL");
+                        cmd.Parameters.AddWithValue("@from_date", currentdate);
                         SqlDataAdapter sqlda = new SqlDataAdapter(cmd);
                         sqlda.Fill(dt);
                         if (dt.Rows.Count > 0)
@@ -147,10 +151,10 @@ namespace Fuji_I.Models
                             foreach (DataRow row in dt.Rows)
                             {
                                 Daily_report_data = new Daily_report();
+                                Daily_report_data.CurrentDate = row["CurrentDate"].ToString();
+                                Daily_report_data.WorkOrder = row["WorkOrder"].ToString();
                                 Daily_report_data.FG_Name = row["FG_Name"].ToString();
-                                Daily_report_data.CurrentDate = Convert.ToDateTime( row["CurrentDate"]);
-                                Daily_report_data.BoardActual = Convert.ToInt32(row["BoardActual"]);
-
+                                Daily_report_data.PCB_COUNT = Convert.ToInt32(row["PCB_COUNT"]);
                                 Daily_report_list.Add(Daily_report_data);
                             }
                         }
@@ -174,7 +178,7 @@ namespace Fuji_I.Models
             {
 
                 dt = new DataTable();
-                using (SqlConnection cus_conn = new SqlConnection(_connectionstring))
+                using (SqlConnection cus_conn = new SqlConnection(_connectionstring2))
                 {
                     using (SqlCommand cus_cmd = new SqlCommand("pro_getcustomerlist", cus_conn))
                     {
@@ -205,7 +209,7 @@ namespace Fuji_I.Models
             List<int> lstWorkOrderNumber = new List<int>();
             try
             {
-                using (SqlConnection con_workorder = new SqlConnection(_connectionstring))
+                using (SqlConnection con_workorder = new SqlConnection(_connectionstring2))
                 {
                     using (SqlCommand com_workOrder = new SqlCommand("pro_getworkorderno", con_workorder))
                     {
@@ -236,7 +240,7 @@ namespace Fuji_I.Models
             int updateResult = 0;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(_connectionstring))
+                using (SqlConnection sqlConnection = new SqlConnection(_connectionstring1))
                 {
                     using (SqlCommand com_password = new SqlCommand("pro_UpdatePassword", sqlConnection))
                     {

@@ -7,9 +7,13 @@ namespace Fuji_I.Models
 
         public string? FG_Name { get; set; }
         
-        public DateTime? CurrentDate { get; set; }
+        //public DateOnly? CurrentDate { get; set; }
+        public string? CurrentDate { get; set; }
+
+        public string? WorkOrder { get; set; }
 
         public int? BoardActual { get; set; }
+        public int? PCB_COUNT { get; set;}
 
     }
     public partial class Dailyreport
@@ -18,9 +22,13 @@ namespace Fuji_I.Models
 
         public string? FG_Name { get; set; }
 
-        public DateTime? CurrentDate { get; set; }
+        //public DateOnly? CurrentDate { get; set; }
+        public string CurrentDate { get; set; }
+        public string? WorkOrder { get; set; }
 
         public int? BoardActual { get; set; }
+
+        public int? PCB_COUNT { get; set; }
 
     }
 

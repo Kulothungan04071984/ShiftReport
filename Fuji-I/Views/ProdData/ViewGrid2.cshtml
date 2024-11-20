@@ -176,7 +176,7 @@
         
        
         const labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => $"{data.CurrentDate:yyyy-MM-dd} {data.FG_Name}")));
-        const actualValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.BoardActual)));
+        const actualValues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.PCB_COUNT)));
         const FGvalues = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(data => data.FG_Name)));
         
         const ctx = document.getElementById('DailyBarChart').getContext('2d');
@@ -186,7 +186,7 @@
                 labels: labels,
                 datasets: [
                     {
-                        label: 'Actual',
+                        label: 'Produced Quantity',
                         data: actualValues,
                         backgroundColor: 'rgba(75, 192, 192, 0.8)',
                         borderColor: 'rgba(75, 192, 192, 1)',
@@ -195,8 +195,8 @@
                     {
                         label: 'FG_name',
                         data: FGvalues,
-                        backgroundColor: 'rgba(255, 99, 132, 0.8)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 255, 255, 255)',
+                        borderColor: 'rgba(255, 255, 255, 255)',
                         borderWidth: 1
                     }
                 ]
@@ -207,7 +207,7 @@
                         // stacked: true,
                         title: {
                             display: true,
-                            text: 'Date & Hour'
+                            text: 'Date & FG Name'
                         }
                     },
                     y: {
@@ -223,8 +223,13 @@
             plugins: {
                     tooltip: {
                        enable:false,
+                    },
+                    legend: {
+                        labels: {
+                            color: 'rgba(255, 255, 255, 1)' // Change to your desired color for the label
+                        }
                     }
-                }
+                },
             },
             plugins: [alwaysShowToolTip]
         });
