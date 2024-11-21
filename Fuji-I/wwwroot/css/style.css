@@ -65,15 +65,15 @@ textarea {
 ._lk_de {
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 40px 0px;
+    padding: 15px 0px;
     position: relative;
 }
 
 .form-03-main {
-    width: 500px;
+    width: 30%;
     display: block;
     margin: 20px auto;
-    padding: 25px 50px 25px;
+    padding: 20px 40px 10px;
     background: rgba(255,255,255,0.6);
     border-radius: 6px;
     z-index: 9;
