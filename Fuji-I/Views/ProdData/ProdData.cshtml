@@ -3,7 +3,7 @@
     ViewData["Title"] = "ProductionData";
 }
 
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <div class="container mt-3">
     <h2 style="padding:1%;">Hourly Production data</h2>
     <section>
@@ -16,11 +16,11 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>DATE</th>
-                            <th>HOUR_INTERVAL</th>
-                            <th>WORKORDER</th>
-                            <th>FG NAME</th>
-                            <th>PCB COUNT </th>
+                            <th id="thDate">DATE</th>
+                            <th id="thHour">HOUR_INTERVAL</th>
+                            <th id="thWorkOrder">WORKORDER</th>
+                            <th id="thFgName">FG NAME</th>
+                            <th id="thCount">PCB COUNT </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,3 +68,40 @@
 
 </div>
 
+<script>
+    var table = $('table');
+
+    $('#thDate, #thHour,#thWorkOrder,#thFgName,#thCount')
+        .wrapInner('<span title="sort this column"/>')
+        .each(function () {
+
+            var th = $(this),
+                thIndex = th.index(),
+                inverse = false;
+
+            th.click(function () {
+
+                table.find('td').filter(function () {
+
+                    return $(this).index() === thIndex;
+
+                }).sortElements(function (a, b) {
+
+                    return $.text([a]) > $.text([b]) ?
+                        inverse ? -1 : 1
+                        : inverse ? 1 : -1;
+
+                }, function () {
+
+                    // parentNode is the element we want to move
+                    return this.parentNode;
+
+                });
+
+                inverse = !inverse;
+
+            });
+
+        });
+
+</script>
