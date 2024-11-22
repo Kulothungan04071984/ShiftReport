@@ -7,9 +7,12 @@ namespace Fuji_I.Models
 
         public string? WorkOrderNumber { get; set; }
 
-        public string? FG_Number { get; set; }
+        public string? FG_Name { get; set; }
+
+        public string? Buildtype { get; set; }
 
         public int? Qty { get; set; }
+
 
         public int? Cycle_time { get; set; }
 

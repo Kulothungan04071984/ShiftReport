@@ -16,13 +16,14 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>LineDetaileID</th>
-                                        <th>WorkOrderNumber</th>
-                                        <th>FG_Number</th>
-                                        <th>Qty</th>
-                                        <th>Cycle Time</th>
-                                        <th>uph</th>
                                         <th>CurrentDate</th>
+                                        <th>WorkOrderNumber</th>
+                                        <th>FG_Name</th>
+                                        <th>Buildtype</th>
+                                        <th>Qty</th>
+                                        @* <th>Cycle Time</th> *@
+                                        @* <th>uph</th> *@
+                                        @* <th>CurrentDate</th> *@
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -32,13 +33,16 @@
                                         @foreach (var wo_item in Model)
                                         {
                                             <tr>
-                                                <td>@wo_item.LineDetaileID</td>
-                                                <td>@wo_item.WorkOrderNumber</td>
-                                                <td>@wo_item.FG_Number</td>
-                                                <td>@wo_item.Qty</td>
-                                                <td>@wo_item.Cycle_time</td>
-                                                <td>@wo_item.uph</td>
+                                                @* <td>@wo_item.LineDetaileID</td> *@
                                                 <td>@wo_item.CurrentDate</td>
+                                                <td>@wo_item.WorkOrderNumber</td>
+                                                <td>@wo_item.FG_Name</td>
+                                                <td>@wo_item.Buildtype</td>
+                                                <td>@wo_item.Qty</td>
+@*                                                 <td>@wo_item.Qty</td>
+                                                <td>@wo_item.Cycle_time</td>
+                                                <td>@wo_item.uph</td> *@
+                                                
                                             </tr>
                                         }
 

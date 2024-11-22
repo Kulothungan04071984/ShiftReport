@@ -58,7 +58,7 @@ namespace Fuji_I.Models
                     using (SqlCommand cmd = new SqlCommand("DIGI_SMTDASHBOARD_AOI", conn))
                     {
                         cmd.CommandType= CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@datarep", "INDIVIDUAL");
+                        cmd.Parameters.AddWithValue("@datarep", "Hourly_report");
                         cmd.Parameters.AddWithValue("@from_date", currentdate);
                         SqlDataAdapter sqlda=new SqlDataAdapter (cmd);
                         sqlda.Fill(dt);
@@ -98,7 +98,8 @@ namespace Fuji_I.Models
                     using (SqlCommand cmd = new SqlCommand("DIGI_SMTDASHBOARD_AOI", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@currendata", currentdate);
+                        cmd.Parameters.AddWithValue("@datarep", "Work_order");
+                        cmd.Parameters.AddWithValue("@from_date", currentdate);
                         SqlDataAdapter sqlda = new SqlDataAdapter(cmd);
                         sqlda.Fill(dt);
                         if (dt.Rows.Count > 0)
@@ -106,13 +107,16 @@ namespace Fuji_I.Models
                             foreach (DataRow row in dt.Rows)
                             {
                                 Work_order_data = new Work_order();
-                                Work_order_data.LineDetaileID = Convert.ToInt32(row["LineDetaileID"].ToString());
-                                Work_order_data.WorkOrderNumber = row["WorkOrderNumber"].ToString();
-                                Work_order_data.FG_Number = row["FG_Number"].ToString();
-                                Work_order_data.Qty = Convert.ToInt32(row["Qty"].ToString());
-                                Work_order_data.Cycle_time = Convert.ToInt32(row["CycleTime"].ToString());
-                                Work_order_data.uph =Convert.ToInt32(row["uph"].ToString());
+                                //Work_order_data.LineDetaileID = Convert.ToInt32(row["LineDetaileID"].ToString());
                                 Work_order_data.CurrentDate = row["CurrentDate"].ToString();
+                                Work_order_data.WorkOrderNumber = row["WorkOrderNumber"].ToString();
+                                Work_order_data.FG_Name = row["FG_Name"].ToString();
+                                Work_order_data.Buildtype = row["Buildtype"].ToString();
+                                Work_order_data.Qty = Convert.ToInt32(row["Qty"].ToString());
+                                
+                                //Work_order_data.Cycle_time = Convert.ToInt32(row["CycleTime"].ToString());
+                                //Work_order_data.uph =Convert.ToInt32(row["uph"].ToString());
+                                
 
                                 Work_order_list.Add(Work_order_data);
                             }
@@ -142,7 +146,7 @@ namespace Fuji_I.Models
                     using (SqlCommand cmd = new SqlCommand("DIGI_SMTDASHBOARD_AOI", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@datarep", "TOTAL");
+                        cmd.Parameters.AddWithValue("@datarep", "Day_report");
                         cmd.Parameters.AddWithValue("@from_date", currentdate);
                         SqlDataAdapter sqlda = new SqlDataAdapter(cmd);
                         sqlda.Fill(dt);

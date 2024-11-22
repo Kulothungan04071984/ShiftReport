@@ -100,7 +100,7 @@ namespace Fuji_I.Controllers
         {
             // var customerlist=_dataAccess.getCustomerDetails();
             // string curdate = DateTime.Today.ToString();
-            string curdate = string.Empty;
+            string curdate = DateOnly.FromDateTime(DateTime.Now).ToString("dd-MM-yyyy");
             var linedetailsdata = _dataAccess.getWorkOrderDetails(curdate);
             return View(linedetailsdata);
         }
