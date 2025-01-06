@@ -1,5 +1,6 @@
 ﻿using Fuji_I.Models;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 
 namespace Fuji_I.Controllers
 {
@@ -15,6 +16,20 @@ namespace Fuji_I.Controllers
         {
             return View();
         }
+
+        //public ActionResult Logout()
+        //{
+        //    // Clear session data
+        //    Session.Clear();      // Clears all session data
+        //    Session.Abandon();    // Ends the session
+
+        //    // Optionally, clear server-side output cache for specific page or action
+        //    HttpCachePolicy.RemoveOutputCacheItem("/Home/Index");
+
+        //    // Redirect to the login page
+        //    return RedirectToAction("Login", "Login");
+        //}
+
 
         public JsonResult loginValidation(string userid,string password)
         {

@@ -156,7 +156,7 @@
         var uid = $('#txtuserid').val();
         var pwd = $('#txtpassword').val();
         $.ajax({
-            url: 'Login/loginValidation',
+            url: '/Login/loginValidation',
             type: 'GET', // or 'GET' depending on your backend
             dataType: 'json', // expecting JSON response from the server
             data: {
@@ -164,10 +164,11 @@
                 password: pwd
             },
             cache: false,
+            async: false,
             success: function (result) {
                 if (result != null) {
                     if (result == 'valid') {
-                        window.location.href = "MainPage/ShiftReport";
+                        window.location.href = "/MainPage/ShiftReport";
                     } else if (result == "invalid") {
                         alert('Please check your username and password');
                     }
