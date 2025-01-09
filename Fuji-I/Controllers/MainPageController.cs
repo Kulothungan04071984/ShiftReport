@@ -169,6 +169,8 @@ public class MainPageController : Controller
         return View(objUtilization);
     }
 
+#region ProcessFiles 
+
     // Processing Line 1, 2, 3 CSV files
     private void ProcessCsvFile<T1, T2, T3>(string filePath, int startRowLine, int endRowLine, int startRowcountb, int endRowcountb, int startRowCycle, int endRowCycle, List<T1> dataList1, Func<string, decimal, T1> createObject1, List<T2> dataList2, Func<string, decimal, T2> createObject2, List<T3> dataList3, Func<string,decimal, T3> createObject3)
     {
@@ -477,4 +479,4 @@ public class MainPageController : Controller
     }
 }
 
-
+#endregion ProcessFiles 
