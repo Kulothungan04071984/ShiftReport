@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Humanizer;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Math;
 
 namespace Fuji_I.Models
 {
@@ -15,14 +16,15 @@ namespace Fuji_I.Models
 
         public DataAccess(IConfiguration configuration)
         {
-            _connectionstring1 = configuration.GetConnectionString("DefaultConnection");
+             _connectionstring1 = configuration.GetConnectionString("DefaultConnection");
+            //_connectionstring1 = configuration.GetConnectionString("TestConnection");
             _connectionstring2 = configuration.GetConnectionString("ProdDataConnection");
         }
         DataTable dt;
         SqlDataAdapter da;
         public DataTable getLoginDetails(string userid, string password)
         {
-
+            writeErrorMessage(_connectionstring1.ToString(), "getLoginDetails - Connection Details");
             dt = new DataTable();
             try
             {
@@ -35,6 +37,7 @@ namespace Fuji_I.Models
                         cmd.Parameters.AddWithValue("@pwd", password);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         da.Fill(dt);
+                        writeErrorMessage(dt.Rows.Count.ToString(), "getLoginDetails - Data Table Rows Count");
                     }
 
                     return dt;
@@ -42,6 +45,7 @@ namespace Fuji_I.Models
             }
             catch (Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "getLoginDetails - Error");
                 return dt;
             }
         }
@@ -80,6 +84,7 @@ namespace Fuji_I.Models
             }
             catch (Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "getLineDetails");
                 return new List<Prod_data>();
             }
            
@@ -128,6 +133,7 @@ namespace Fuji_I.Models
             }
             catch (Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "getWorkOrderDetails");
                 return new List<Work_order>();
             }
 
@@ -169,6 +175,7 @@ namespace Fuji_I.Models
             }
             catch (Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "getDailyOutputDetails");
                 return new List<Daily_report>();
             }
 
@@ -203,6 +210,7 @@ namespace Fuji_I.Models
 
             catch(Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "getCustomerDetails");
                 return result;
             }
 
@@ -235,6 +243,7 @@ namespace Fuji_I.Models
             }
             catch (Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "getWorkOrdernumber");
                 return lstWorkOrderNumber;
             }
         }
@@ -260,7 +269,27 @@ namespace Fuji_I.Models
             }
             catch (Exception ex)
             {
+                writeErrorMessage(ex.Message.ToString(), "UpdatePassword");
                 return updateResult;
+            }
+        }
+
+        public void writeErrorMessage(string errorMessage, string functionName)
+        {
+            var systemPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Messages  -" + "\\" + DateTime.Now.ToString("dd-MM-yyyy");
+
+            if (!Directory.Exists(systemPath))
+            {
+                Directory.CreateDirectory(systemPath);
+            }
+
+            string WrErrorLog = String.Format(@"{0}\{1}.txt", systemPath, "LineReportDetails");
+            using (StreamWriter errLogs = new StreamWriter(WrErrorLog, true))
+            {
+                errLogs.WriteLine("--------------------------------------------------------------------------------------------------------------------" + Environment.NewLine);
+                errLogs.WriteLine("---------------------------------------------------" + DateTime.Now + "----------------------------------------------" + Environment.NewLine);
+                errLogs.WriteLine(errorMessage + Environment.NewLine + "-----" + functionName);
+                errLogs.Close();
             }
         }
         //public Prod_data getFgDetails(int workordernumber)
