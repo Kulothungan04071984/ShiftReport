@@ -25,9 +25,10 @@ public class MainPageController : Controller
         //string filePath1 = _configuration["AppSettings:FilePath1"];
         //string filePath2 = _configuration["AppSettings:FilePath2"];
         //string filePath3 = _configuration["AppSettings:FilePath3"];
-        var today = DateOnly.FromDateTime(DateTime.Now).ToString("yyyyMMdd");
-       // today = today.Replace("-", "");
-      //  today = today.Replace("/", "");
+        // var today = DateOnly.FromDateTime(DateTime.Now).ToString("yyyyMMdd");
+        var today = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)).ToString("yyyyMMdd");
+        // today = today.Replace("-", "");
+        //  today = today.Replace("/", "");
         var filepath = "D:\\shiftreport\\" + today;
         if (!Directory.Exists(filepath)) { 
             Directory.CreateDirectory(filepath);
