@@ -22,9 +22,19 @@ public class MainPageController : Controller
 
     public IActionResult ShiftReport()
     {
-        string filePath1 = _configuration["AppSettings:FilePath1"];
-        string filePath2 = _configuration["AppSettings:FilePath2"];
-        string filePath3 = _configuration["AppSettings:FilePath3"];
+        //string filePath1 = _configuration["AppSettings:FilePath1"];
+        //string filePath2 = _configuration["AppSettings:FilePath2"];
+        //string filePath3 = _configuration["AppSettings:FilePath3"];
+        var today = DateOnly.FromDateTime(DateTime.Now).ToString("yyyyMMdd");
+       // today = today.Replace("-", "");
+      //  today = today.Replace("/", "");
+        var filepath = "D:\\shiftreport\\" + today;
+        if (!Directory.Exists(filepath)) { 
+            Directory.CreateDirectory(filepath);
+        }
+        string filePath1 = filepath + "\\" + today + "_Line1.csv";
+        string filePath2 = filepath + "\\" + today + "_Line2.csv";
+        string filePath3 = filepath + "\\" + today + "_Line3.csv";
 
         const int StartRowLine = 8;
         const int EndRowLine = 20;
@@ -456,8 +466,8 @@ public class MainPageController : Controller
 
     public void writeErrorMessage(string errorMessage, string functionName)
     {
-        //var systemPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\iTime" + "\\" + DateTime.Now.ToString("dd-MM-yyyy");
-        string systemPath = _configuration["AppSettings:FilePath4"]; 
+        var systemPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\LineReport" + "\\" + DateTime.Now.ToString("dd-MM-yyyy");
+        //string systemPath = _configuration["AppSettings:FilePath4"]; 
         if (!Directory.Exists(systemPath))
         {
             Directory.CreateDirectory(systemPath);

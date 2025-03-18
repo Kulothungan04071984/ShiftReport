@@ -60,7 +60,7 @@ textarea {
     position: relative;
     z-index: 2;
     overflow: hidden;
-    height:44rem;
+    height:46rem !important;
 }
 
 ._lk_de {
