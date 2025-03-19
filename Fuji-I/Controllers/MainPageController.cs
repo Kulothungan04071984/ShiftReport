@@ -23,7 +23,8 @@ public class MainPageController : Controller
     public IActionResult ShiftReport()
     {
         // Get yesterday's date in "yyyyMMdd" format
-        var today = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)).ToString("yyyyMMdd");
+        var today = DateOnly.FromDateTime(DateTime.Now).ToString("yyyyMMdd");
+        var today1 = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)).ToString("yyyyMMdd");
         var filepath = "D:\\shiftreport\\" + today;
 
         // Ensure the directory exists
@@ -33,9 +34,9 @@ public class MainPageController : Controller
         }
 
         // Define file paths for Line1, Line2, and Line3 CSV files
-        string filePath1 = filepath + "\\" + today + "_Line1.csv";
-        string filePath2 = filepath + "\\" + today + "_Line2.csv";
-        string filePath3 = filepath + "\\" + today + "_Line3.csv";
+        string filePath1 = filepath + "\\" + today1 + "_Line1.csv";
+        string filePath2 = filepath + "\\" + today1 + "_Line2.csv";
+        string filePath3 = filepath + "\\" + today1 + "_Line3.csv";
 
         // Define initial start and end rows (you can adjust these based on your specific requirement)
         //const int StartRowLine = 8;
