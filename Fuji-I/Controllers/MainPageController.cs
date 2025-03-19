@@ -22,28 +22,30 @@ public class MainPageController : Controller
 
     public IActionResult ShiftReport()
     {
-        //string filePath1 = _configuration["AppSettings:FilePath1"];
-        //string filePath2 = _configuration["AppSettings:FilePath2"];
-        //string filePath3 = _configuration["AppSettings:FilePath3"];
-        // var today = DateOnly.FromDateTime(DateTime.Now).ToString("yyyyMMdd");
+        // Get yesterday's date in "yyyyMMdd" format
         var today = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)).ToString("yyyyMMdd");
-        // today = today.Replace("-", "");
-        //  today = today.Replace("/", "");
         var filepath = "D:\\shiftreport\\" + today;
-        if (!Directory.Exists(filepath)) { 
+
+        // Ensure the directory exists
+        if (!Directory.Exists(filepath))
+        {
             Directory.CreateDirectory(filepath);
         }
+
+        // Define file paths for Line1, Line2, and Line3 CSV files
         string filePath1 = filepath + "\\" + today + "_Line1.csv";
         string filePath2 = filepath + "\\" + today + "_Line2.csv";
         string filePath3 = filepath + "\\" + today + "_Line3.csv";
 
-        const int StartRowLine = 8;
-        const int EndRowLine = 20;
-        const int StartRowbcount = 604;
-        const int EndRowbcount = 606;
-        const int StartRowCycle = 1922;
-        const int EndRowCycle = 1933;
+        // Define initial start and end rows (you can adjust these based on your specific requirement)
+        //const int StartRowLine = 8;
+        //const int EndRowLine = 20;
+        //const int StartRowbcount = 604;
+        //const int EndRowbcount = 606;
+        //const int StartRowCycle = 1922;
+        //const int EndRowCycle = 1933;
 
+        // Initialize lists to store utilization data for each line
         List<Line1Utilization> Line1PieData = new List<Line1Utilization>();
         List<Line2Utilization> Line2PieData = new List<Line2Utilization>();
         List<Line3Utilization> Line3PieData = new List<Line3Utilization>();
@@ -54,10 +56,22 @@ public class MainPageController : Controller
         List<OEE2Utilization> Line2OEEData = new List<OEE2Utilization>();
         List<OEE3Utilization> Line3OEEData = new List<OEE3Utilization>();
 
+        // Variables to store the start row for each word found in the CSV files
+        int StartRowLine1 = -1, StartRowbcount1 = -1, StartRowCycle1 = -1;
+        int StartRowLine2 = -1, StartRowbcount2 = -1, StartRowCycle2 = -1;
+        int StartRowLine3 = -1, StartRowbcount3 = -1, StartRowCycle3 = -1;
 
         try
         {
-            ProcessCsvFile<Line1Utilization, Module1Utilization, OEE1Utilization>(filePath1, StartRowLine, EndRowLine, StartRowbcount, EndRowbcount, StartRowCycle, EndRowCycle, Line1PieData, (label, value) => new Line1Utilization { Label = label, Value = value }, Line1CycleData, (label, value) => new Module1Utilization { Label = label, Value = value }, Line1OEEData, (label,value1) => new OEE1Utilization {Label=label, Value = value1 });
+            ProcessCsvFileWithRowSearch(filePath1, ref StartRowLine1, ref StartRowbcount1, ref StartRowCycle1);
+            int StartRowLine1_1 = StartRowLine1 + 2;
+            int EndRowLine1 = StartRowLine1+12;
+            int StartRowbcount1_1 = StartRowbcount1 - 1;
+            int EndRowbcount1 = StartRowbcount1 + 2;
+            int StartRowCycle1_1 = StartRowCycle1 + 5;
+            int EndRowCycle1 = StartRowCycle1 + 11;
+
+            ProcessCsvFile<Line1Utilization, Module1Utilization, OEE1Utilization>(filePath1, StartRowLine1_1, EndRowLine1, StartRowbcount1_1, EndRowbcount1, StartRowCycle1_1, EndRowCycle1, Line1PieData, (label, value) => new Line1Utilization { Label = label, Value = value }, Line1CycleData, (label, value) => new Module1Utilization { Label = label, Value = value }, Line1OEEData, (label, value1) => new OEE1Utilization { Label = label, Value = value1 });
         }
         catch (FileNotFoundException ex)
         {
@@ -92,7 +106,15 @@ public class MainPageController : Controller
 
         try
         {
-            ProcessCsvFile<Line2Utilization, Module2Utilization, OEE2Utilization>(filePath2, StartRowLine, EndRowLine, StartRowbcount, EndRowbcount, StartRowCycle, EndRowCycle, Line2PieData, (label, value) => new Line2Utilization { Label = label, Value = value }, Line2CycleData, (label, value) => new Module2Utilization { Label = label, Value = value }, Line2OEEData, (label,value1) => new OEE2Utilization {Label=label, Value = value1 });
+            ProcessCsvFileWithRowSearch(filePath2, ref StartRowLine2, ref StartRowbcount2, ref StartRowCycle2);
+            int StartRowLine1_2 = StartRowLine2 + 2;
+            int EndRowLine2 = StartRowLine2 + 12;
+            int StartRowbcount1_2 = StartRowbcount2 - 1;
+            int EndRowbcount2 = StartRowbcount2 + 2;
+            int StartRowCycle1_2 = StartRowCycle2 + 5;
+            int EndRowCycle2 = StartRowCycle2 + 11;
+
+            ProcessCsvFile<Line2Utilization, Module2Utilization, OEE2Utilization>(filePath2, StartRowLine1_2, EndRowLine2, StartRowbcount1_2, EndRowbcount2, StartRowCycle1_2, EndRowCycle2, Line2PieData, (label, value) => new Line2Utilization { Label = label, Value = value }, Line2CycleData, (label, value) => new Module2Utilization { Label = label, Value = value }, Line2OEEData, (label, value1) => new OEE2Utilization { Label = label, Value = value1 });
         }
         catch (FileNotFoundException ex)
         {
@@ -127,7 +149,14 @@ public class MainPageController : Controller
 
         try
         {
-            ProcessCsvFile<Line3Utilization, Module3Utilization, OEE3Utilization>(filePath3, StartRowLine, EndRowLine, StartRowbcount, EndRowbcount, StartRowCycle, EndRowCycle, Line3PieData, (label, value) => new Line3Utilization { Label = label, Value = value }, Line3CycleData, (label, value) => new Module3Utilization { Label = label, Value = value }, Line3OEEData, (label,value1) => new OEE3Utilization {Label=label, Value = value1 });
+            ProcessCsvFileWithRowSearch(filePath3, ref StartRowLine3, ref StartRowbcount3, ref StartRowCycle3);
+            int StartRowLine1_3 = StartRowLine3 + 2;
+            int EndRowLine3 = StartRowLine3 + 12;
+            int StartRowbcount1_3 = StartRowbcount3 - 1;
+            int EndRowbcount3 = StartRowbcount3 + 2;
+            int StartRowCycle1_3 = StartRowCycle3 + 5;
+            int EndRowCycle3 = StartRowCycle3 + 11;
+            ProcessCsvFile<Line3Utilization, Module3Utilization, OEE3Utilization>(filePath3, StartRowLine1_3, EndRowLine3, StartRowbcount1_3, EndRowbcount3, StartRowCycle1_3, EndRowCycle3, Line3PieData, (label, value) => new Line3Utilization { Label = label, Value = value }, Line3CycleData, (label, value) => new Module3Utilization { Label = label, Value = value }, Line3OEEData, (label, value1) => new OEE3Utilization { Label = label, Value = value1 });
         }
         catch (FileNotFoundException ex)
         {
@@ -160,27 +189,61 @@ public class MainPageController : Controller
             Line3PieData.Add(new Line3Utilization { Label = "Null", Value = 0 });
         }
 
+        // Construct the result object to pass to the view
         var objUtilization = new Utilization
         {
-
             lstOEE1Utilization = Line1OEEData,
             lstOEE2Utilization = Line2OEEData,
             lstOEE3Utilization = Line3OEEData,
-
-
             lstLine1Utilization = Line1PieData,
             lstLine2Utilization = Line2PieData,
             lstLine3Utilization = Line3PieData,
             lstModule1Utilization = Line1CycleData,
             lstModule2Utilization = Line2CycleData,
             lstModule3Utilization = Line3CycleData,
-
         };
 
         return View(objUtilization);
     }
 
-#region ProcessFiles 
+ 
+
+    // Method to process the CSV files and search for specific rows
+    private void ProcessCsvFileWithRowSearch(string filePath, ref int StartRowLine, ref int StartRowbcount, ref int StartRowCycle)
+    {
+        if (System.IO.File.Exists(filePath))
+        {
+            string[] lines = System.IO.File.ReadAllLines(filePath);
+            string[] searchWords = {"Actual Panel Output", "Line Running Time Rate",  "<Cycle Time Report>" };
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Contains(searchWords[0]) && StartRowbcount == -1) // Actual Panel Count
+                {
+                    StartRowbcount = i + 1;
+                }
+                if (lines[i].Contains(searchWords[1]) && StartRowLine == -1) // Line Running Time Rate
+                {
+                    StartRowLine = i + 1;
+                }
+                if (lines[i].Contains(searchWords[2]) && StartRowCycle == -1) // <Cycle Time Report>
+                {
+                    StartRowCycle = i + 1;
+                }
+                if (StartRowbcount != -1 && StartRowLine != -1 && StartRowCycle != -1)
+                    break; // Exit the loop if all words are found
+            }
+        }
+    }
+
+    // Method to handle errors in file processing
+    private void HandleFileProcessingError(Exception ex, List<dynamic> pieData)
+    {
+        writeErrorMessage(ex.Message.ToString(), "FileProcessingError");
+        pieData.Add(new Line1Utilization { Label = "Null", Value = 0 }); // Example; adjust based on the data type
+    }
+
+    #region ProcessFiles 
 
     // Processing Line 1, 2, 3 CSV files
     private void ProcessCsvFile<T1, T2, T3>(string filePath, int startRowLine, int endRowLine, int startRowcountb, int endRowcountb, int startRowCycle, int endRowCycle, List<T1> dataList1, Func<string, decimal, T1> createObject1, List<T2> dataList2, Func<string, decimal, T2> createObject2, List<T3> dataList3, Func<string,decimal, T3> createObject3)
@@ -207,14 +270,14 @@ public class MainPageController : Controller
                 decimal maxValueCondition2 = decimal.MinValue;
                 string maxLabelCondition2 = null;
 
-                while (!reader.EndOfStream && (currentRowLine <= endRowLine || currentRowcountb <= endRowcountb || currentRowCycle <= endRowCycle))
+                while (!reader.EndOfStream && (currentRowLine <= endRowLine-1 || currentRowcountb <= endRowcountb || currentRowCycle <= endRowCycle))
                 {
                     var line = reader.ReadLine();
                     //Debug.WriteLine($"Reading line {currentRowLine + currentRowCycle}: {line}");
 
                     var values = line.Split(',');
 
-                    if (currentRowLine >= startRowLine && currentRowLine <= endRowLine && isReadingLine && values.Length >= 2)
+                    if (currentRowLine >= startRowLine && currentRowLine <= endRowLine-1 && isReadingLine && values.Length >= 2)
                     {
                         string label = values[0].Trim();
                         string valueStr = values[1].Trim();
@@ -225,7 +288,8 @@ public class MainPageController : Controller
                         int value1 = ConvertToSeconds(valueStr1);
 
                         // Calculate downtimesum for rows 1, 5, and 10
-                        if (currentRowLine == 13 || currentRowLine == 14 || currentRowLine == 15 || currentRowLine == 16 || currentRowLine == 17)
+                        if (currentRowLine == startRowLine+5 || currentRowLine == startRowLine + 6 || currentRowLine == startRowLine + 7 || currentRowLine == startRowLine + 8 ||
+                            currentRowLine == startRowLine + 9)
                         {
                             downtimesum += value1;
 
@@ -233,7 +297,7 @@ public class MainPageController : Controller
                         }
 
                         // Calculate runtimesum for rows 1 to 10
-                        if (currentRowLine >= 8 && currentRowLine <= 18)
+                        if (currentRowLine >= startRowLine && currentRowLine <= startRowLine+10)
                         {
                             pptimesum += value1;
                             Debug.WriteLine($"Reading line {currentRowLine}: {value1}");
@@ -248,7 +312,7 @@ public class MainPageController : Controller
 
                     {
 
-                        if (currentRowLine == 604)
+                        if (currentRowLine == startRowcountb)
                         {
 
                             for (int i = 1; i <= 24; i++)
@@ -284,7 +348,8 @@ public class MainPageController : Controller
                     else if (currentRowCycle >= startRowCycle && currentRowCycle <= endRowCycle && !isReadingLine && values.Length >= 7)
                     {
                         // Condition 1: Rows 1925, 1926, 1927, 1928, 1931, 1934 for Line 1
-                        if (currentRowCycle == 1924 || currentRowCycle == 1925 || currentRowCycle == 1926 || currentRowCycle == 1927 || currentRowCycle == 1930 || currentRowCycle == 1933)
+                        if (currentRowCycle == startRowCycle+2 || currentRowCycle == startRowCycle+3 || currentRowCycle == startRowCycle+4 ||
+                            currentRowCycle == startRowCycle+5 || currentRowCycle == startRowCycle+8 || currentRowCycle == startRowCycle+11)
                         {
                             string label = values[2].Trim();
                             string valueStr = values[6].Trim();
@@ -301,7 +366,9 @@ public class MainPageController : Controller
                         }
 
                         // Condition 2: Rows 1923, 1924, 1929, 1930, 1932, 1933 for Line 2
-                        else if (currentRowCycle == 1922 || currentRowCycle == 1923 || currentRowCycle == 1928 || currentRowCycle == 1929 || currentRowCycle == 1931 || currentRowCycle == 1932)
+                        else if (currentRowCycle == startRowCycle || 
+                                currentRowCycle == startRowCycle+1 || currentRowCycle == startRowCycle+6 || currentRowCycle == startRowCycle+7 || currentRowCycle == startRowCycle+9 
+                             || currentRowCycle == startRowCycle+10)
                         {
                             string label = values[2].Trim();
                             string valueStr = values[6].Trim();
