@@ -55,6 +55,36 @@ namespace Fuji_I.Models
             }
         }
 
+        public List<Line4Utilization> GetLine4Utilization()
+        {
+            try
+            {
+                // xmldata();
+                var Line4Utilizations = new List<Line4Utilization>();
+                return Line4Utilizations;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Line5Utilization> GetLine5Utilization()
+        {
+            try
+            {
+                // xmldata();
+                var Line5Utilizations = new List<Line5Utilization>();
+                return Line5Utilizations;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         //public string DataTableToHtml(DataTable dt)
         //{
         //    StringWriter sw = new StringWriter();
@@ -154,6 +184,16 @@ namespace Fuji_I.Models
         }
 
         public List<List<string>> ReadCsv3(string filePath3)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<List<string>> ReadCsv4(string filePath4)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<List<string>> ReadCsv5(string filePath5)
         {
             throw new NotImplementedException();
         }

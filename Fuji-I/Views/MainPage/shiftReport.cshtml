@@ -17,327 +17,206 @@
 
 
 <script>
-    $(document).ready(function () {
-        setTimeout(function renderCharts() {
-            location.reload(true); // Reload the page forcefully
-        }, 60000); 
-    });
+    // $(document).ready(function () {
+    //     setTimeout(function renderCharts() {
+    //         location.reload(true); // Reload the page forcefully
+    //     }, 60000);
+    // });
 </script>
 
 <div style="padding-top:2%;width:100%;">
-<div class="container">
-     <div class="row">
-            <div class="col-lg-4">
+    <div class="container">
+        <div class="row" style="width:100vw">
+            <div class="col-lg-2">
                 <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">OEE -Line1 </h5>
                         <p class="card-text"></p>
                         <canvas id="OEELine1"></canvas>
-                        <div id="lblOEE1Error" style="height:19.5em">
+                        <div id="lblOEE1Error" style="height:8em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span><img src="~/images/blue.png" style="width:20%;height:60%;" /></span>
-                                <span class="line">Availability</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/orange.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Performace</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/purple.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Quality</span>
-                            </div>
-                        </div>
-    
-                    </div>                        
-                </div>
+
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">OEE -Line2 </h5>
                         <p class="card-text"></p>
                         <canvas id="OEELine2"></canvas>
-                        <div id="lblOEE2Error" style="height:19.5em">
+                        <div id="lblOEE2Error" style="height:8em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span><img src="~/images/blue.png" style="width:20%;height:60%;" /></span>
-                                <span class="line">Availability</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/orange.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Performace</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/purple.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Quality</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
 
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">OEE -Line3 </h5>
                         <p class="card-text"></p>
                         <canvas id="OEELine3"></canvas>
-                        <div id="lblOEE3Error" style="height:19.5em">
+                        <div id="lblOEE3Error" style="height:8em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span><img src="~/images/blue.png" style="width:20%;height:60%;" /></span>
-                                <span class="line">Availability</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/orange.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Performace</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/purple.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Quality</span>
-                            </div>
-                        </div>
+            </div>
 
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">OEE -Line4 </h5>
+                        <p class="card-text"></p>
+                        <canvas id="OEELine4"></canvas>
+                        <div id="lblOEE4Error" style="height:8em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">OEE -Line5 </h5>
+                        <p class="card-text"></p>
+                        <canvas id="OEELine5"></canvas>
+                        <div id="lblOEE5Error" style="height:8em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="width: 100vw">
+          <div class="col-lg-12">
+            <div class="card" style="width: 100vw;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <span><img src="~/images/blue.png" style="width:10%;height:35%;" /></span>
+                            <span class="line">Availability</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <span>
+                                    <img src="~/images/orange.png" style="width:10%;height:35%;" />
+                            </span>
+                            <span class="line">Performance</span>
+                        </div>
+                        <div class="col-lg-4">
+                            <span>
+                                    <img src="~/images/purple.png" style="width:10%;height:35%;" />
+                            </span>
+                            <span class="line">Quality</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
 
 
 
-            <div class="col-lg-4">
+
+        <div class="row" style="width: 100vw">
+            <div class="col-lg-2">
                 <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">Line1 - Summary </h5>
                         <p class="card-text"></p>
                         <canvas id="Line1Summary"></canvas>
-                        <div id="lblLine1Error" style="height:19.5em">
+                        <div id="lblLine1Error" style="height:8em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span><img src="~/images/bluefinal.png" style="width:20%;height:60%;" /></span>
-                                <span class="line">Production</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/darkGreenFinal.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Wait Previous</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/GreenFinal.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Wait Next</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/Oilve.png" style="width:20%;height:55%;" />
-                                </span>
-                                <span class="line">Part supply</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/brown.png" style="width:20%;height:55%;" />
-                                </span>
-                                <span class="line">Supply (unit)</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/RedFinal.png" style="width:20%;height:55%;" />
-
-                                </span>
-                                <span class="line">Opt Downtime</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/yellowFinal.png" style="width:20%;height:40%;" />
-                                </span>
-                                <span class="line">Machine error</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/purple.png" style="width:20%;height:40%;" />
-                                </span>
-                                <span class="line">Changeover</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/silvar.png" style="width:20%;height:40%;" />
-                                </span>
-                                <span class="line">Maintenance</span>
-                            </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/light-Green.png" style="width:20%;height:55%;" />
-                                </span>
-                                <span class="line">Other</span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
             </div>
 
-            <div class="col-lg-4">
+
+
+            <div class="col-lg-2">
                 <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">Line2 - Summary</h5>
                         <p class="card-text"></p>
                         <canvas id="Line2Summary"></canvas>
-                        <div id="lblLine2Error" style="height:19.5em">
+                        <div id="lblLine2Error" style="height:8em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span><img src="~/images/bluefinal.png" style="width:20%;height:60%;" /></span>
-                                <span class="line">Production</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/darkGreenFinal.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Wait Previous</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/GreenFinal.png" style="width:20%;height:60%;" />
-                                </span>
-                                <span class="line">Wait Next</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/Oilve.png" style="width:20%;height:55%;" />
-                                </span>
-                                <span class="line">Part supply</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/brown.png" style="width:20%;height:55%;" />
-                                </span>
-                                <span class="line">Supply (unit)</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/RedFinal.png" style="width:20%;height:55%;" />
-
-                                </span>
-                                <span class="line">Opt Downtime</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/yellowFinal.png" style="width:20%;height:40%;" />
-                                </span>
-                                <span class="line">Machine error</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/purple.png" style="width:20%;height:40%;" />
-                                </span>
-                                <span class="line">Changeover</span>
-                            </div>
-                            <div class="col-lg-4">
-                                <span>
-                                    <img src="~/images/silvar.png" style="width:20%;height:40%;" />
-                                </span>
-                                <span class="line">Maintenance</span>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <span>
-                                        <img src="~/images/light-Green.png" style="width:20%;height:55%;" />
-                                    </span>
-                                    <span class="line">Other</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
 
-            <div class="col-lg-4">
+
+            <div class="col-lg-2">
                 <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">Line3 - Summary</h5>
                         <p class="card-text"></p>
                         <canvas id="Line3Summary"></canvas>
-                        <div id="lblLine3Error" style="height:19.5em">
+                        <div id="lblLine3Error" style="height:8em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
-                <div class="card">
+ 
+            </div>
+
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Line4 - Summary</h5>
+                        <p class="card-text"></p>
+                        <canvas id="Line4Summary"></canvas>
+                        <div id="lblLine4Error" style="height:8em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Line5 - Summary</h5>
+                        <p class="card-text"></p>
+                        <canvas id="Line5Summary"></canvas>
+                        <div id="lblLine5Error" style="height:8em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="row" style="width: 100vw">
+            <div class="col-lg-12">
+                <div class="card " style="width: 100%;">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-4">
-                                <span><img src="~/images/bluefinal.png" style="width:20%;height:60%;" /></span>
+                                <span><img src="~/images/bluefinal.png" style="width:10%;height:35%;" /></span>
                                 <span class="line">Production</span>
                             </div>
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/darkGreenFinal.png" style="width:20%;height:60%;" />
+                                    <img src="~/images/darkGreenFinal.png" style="width:10%;height:35%;" />
                                 </span>
                                 <span class="line">Wait Previous</span>
                             </div>
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/GreenFinal.png" style="width:20%;height:60%;" />
+                                    <img src="~/images/GreenFinal.png" style="width:10%;height:35%;" />
                                 </span>
                                 <span class="line">Wait Next</span>
                             </div>
@@ -345,178 +224,167 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/Oilve.png" style="width:20%;height:55%;" />
+                                    <img src="~/images/Oilve.png" style="width:10%;height:50%;" />
                                 </span>
                                 <span class="line">Part supply</span>
                             </div>
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/brown.png" style="width:20%;height:55%;" />
+                                    <img src="~/images/brown.png" style="width:10%;height:50%;" />
                                 </span>
                                 <span class="line">Supply (unit)</span>
                             </div>
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/RedFinal.png" style="width:20%;height:55%;" />
+                                    <img src="~/images/RedFinal.png" style="width:10%;height:50%;" />
 
                                 </span>
                                 <span class="line">Opt Downtime</span>
                             </div>
                         </div>
+                        <div style="height: 20px;"></div>  <!-- This will create a blank row with a height of 20px -->
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/yellowFinal.png" style="width:20%;height:40%;" />
+                                    <img src="~/images/yellowFinal.JPG" style="width:10%;height:45%;" />
                                 </span>
                                 <span class="line">Machine error</span>
                             </div>
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/purple.png" style="width:20%;height:40%;" />
+                                    <img src="~/images/purple.png" style="width:10%;height:45%;" />
                                 </span>
                                 <span class="line">Changeover</span>
                             </div>
                             <div class="col-lg-4">
                                 <span>
-                                    <img src="~/images/silvar.png" style="width:20%;height:40%;" />
+                                    <img src="~/images/silvar.png" style="width:10%;height:45%;" />
                                 </span>
                                 <span class="line">Maintenance</span>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <span>
-                                        <img src="~/images/light-Green.png" style="width:20%;height:55%;" />
-                                    </span>
-                                    <span class="line">Other</span>
-                                </div>
-                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-4"style="margin-top:1%">
+                                <span>
+                                    <img src="~/images/light-Green.png" style="width:10%;height:35%;" />
+                                </span>
+                                <span class="line">Other</span>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+
+        <div class="row" style="width: 100vw">
+
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Line-1 Cycle time</h5>
+                        <p class="card-text"></p>
+                        <canvas id="Cyct1Summary" style="width:50%;"></canvas>
+                        <div id="lblcyct1Error" style="height:4em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
                 </div>
             </div>
 
-      
 
-        <div class="col-lg-4">
-            <div class="card lg-4">
-            <div class="card-body">
-                <h5 class="card-title">Line-1 Cycle time</h5>
-                <p class="card-text"></p>
-                    <canvas id="Cyct1Summary" style="width:50%;"></canvas>
-                        <div id="lblcyct1Error" style="height:10em">
-                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
-                        </div>
-            </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <span><img src="~/images/blue.png" style="width:15%;height:50%;" /></span>
-                                    <span>Lane-1</span>
-                                </div>
-                                <div class="col-lg-4">
-                                    <span>
-                                        <img src="~/images/green.png" style="width:15%;height:50%;" />
-                                    </span>
-                                    <span>Lane-2</span>
-                                </div>
-                             
-                            </div>
-                   
-                        </div>
-                    </div>
 
-            </div>
-           
-        </div>
-
-            <div class="col-lg-4">
-                <div class="card lg-4">
+            <div class="col-lg-2">
+                <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">Line-2 Cycle time </h5>
                         <p class="card-text"></p>
                         <canvas id="Cyct2Summary" style="width:50%;"></canvas>
-                        <div id="lblcyct2Error" style="height:10em">
+                        <div id="lblcyct2Error" style="height:4em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <span><img src="~/images/blue.png" style="width:15%;height:50%;" /></span>
-                                    <span>Lane-1</span>
-                                </div>
-                                <div class="col-lg-4">
-                                    <span>
-                                        <img src="~/images/green.png" style="width:15%;height:50%;" />
-                                    </span>
-                                    <span>Lane-2</span>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
 
-            <div class="col-lg-4">
-                <div class="card lg-4">
+            <div class="col-lg-2">
+                <div class="card lg-5">
                     <div class="card-body">
                         <h5 class="card-title">Line-3 Cycle time</h5>
                         <p class="card-text"></p>
                         <canvas id="Cyct3Summary" style="width:50%;"></canvas>
-                        <div id="lblcyct3Error" style="height:10em">
+                        <div id="lblcyct3Error" style="height:4em">
                             <input type="tel" placeholder="File Not Found" class="filenotfound" />
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <span><img src="~/images/blue.png" style="width:15%;height:50%;" /></span>
-                                    <span>Lane-1</span>
-                                </div>
-                                <div class="col-lg-4">
-                                    <span>
-                                        <img src="~/images/green.png" style="width:15%;height:50%;" />
-                                    </span>
-                                    <span>Lane-2</span>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
 
-        
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Line-4 Cycle time</h5>
+                        <p class="card-text"></p>
+                        <canvas id="Cyct4Summary" style="width:50%;"></canvas>
+                        <div id="lblcyct4Error" style="height:4em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div>
+                    </div>
+                </div>
 
-       @* <div class="row"> *@
+            </div>
 
+            <div class="col-lg-2">
+                <div class="card lg-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Line-5 Cycle time</h5>
+                        <p class="card-text"></p>
+                        <canvas id="Cyct5Summary" style="width:50%;"></canvas>
+                        <div id="lblcyct5Error" style="height:4em">
+                            <input type="tel" placeholder="File Not Found" class="filenotfound" />
+                        </div>
+                    </div>
+                </div>
 
+            </div>
 
+        </div>
 
-          
+        <div class="row" style="width: 100vw">
+            <div class="card lg-12" style="width: 100%;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <span><img src="~/images/blue.png" style="width:15%;height:50%;" /></span>
+                                <span  class="Prod_details">Lane-1</span>
+                            </div>
+                            <div class="col-lg-4">
+                                <span>
+                                    <img src="~/images/green.png" style="width:15%;height:50%;" />
+                                </span>
+                                <span class="Prod_details">Lane-2</span>
+                            </div>
 
-           
-     </div>
+                        </div>
 
-    @* </div> *@
-</div>
+                    </div>
+               </div>
+        </div>
+
+    </div>
 </div>
 <style>
-    div span{
-        font-size:medium;
+    div span {
+        font-size: medium;
     }
-    .line{
-        font-size:63% !important;
+
+    .line {
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
     }
 
     .highlight {
@@ -524,31 +392,46 @@
         stroke: #000;
         stroke-width: 2;
     }
-    .filenotfound
-    {
-         border: none;
+
+    .filenotfound {
+        border: none;
         text-align: center;
         margin-top: 40%;
-        font-size: 160%;
+        font-size: 100%;
         font-family: monospace;
         font-weight: bold;
-        
+    }
+
+    .Prod_details{
+
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            /* color: #333; */
     }
 </style>
 
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-      
+
         $('#lblOEE1Error').css('display', 'none');
         $('#lblOEE2Error').css('display', 'none');
         $('#lblOEE3Error').css('display', 'none');
+        $('#lblOEE4Error').css('display', 'none');
+        $('#lblOEE5Error').css('display', 'none');
+
         $('#lblLine1Error').css('display', 'none');
         $('#lblLine2Error').css('display', 'none');
         $('#lblLine3Error').css('display', 'none');
+        $('#lblLine4Error').css('display', 'none');
+        $('#lblLine5Error').css('display', 'none');
+
         $('#lblcyct1Error').css('display', 'none');
         $('#lblcyct2Error').css('display', 'none');
         $('#lblcyct3Error').css('display', 'none');
+        $('#lblcyct4Error').css('display', 'none');
+        $('#lblcyct5Error').css('display', 'none');
         // Define the custom plugin to draw text in the center
         const centerTextPlugin = {
             id: 'centerText',
@@ -700,6 +583,14 @@
             const oeeData3 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE3Utilization));
             createChart(ctxOEEChart3, oeeData3, 'lblOEE3Error', 'OEELine3');
 
+            const ctxOEEChart4 = document.getElementById('OEELine4').getContext('2d');
+            const oeeData4 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE4Utilization));
+            createChart(ctxOEEChart4, oeeData4, 'lblOEE4Error', 'OEELine4');
+
+            const ctxOEEChart5 = document.getElementById('OEELine5').getContext('2d');
+            const oeeData5 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstOEE5Utilization));
+            createChart(ctxOEEChart5, oeeData5, 'lblOEE5Error', 'OEELine5');
+
 
 
             // Chart 1 (Pie Chart)
@@ -708,22 +599,22 @@
 
             var chrtlabels1 = [];
             var chrtvalues1 = [];
-           
+
             if (chartdata1 && chartdata1.length > 0 && chartdata1[0].Label !== "Null") {
                 chrtlabels1 = chartdata1.map(function (item) { return item.Label; });
                 chrtvalues1 = chartdata1.map(function (item) { return item.Value; });
                 console.log(chartdata1);
             } else {
-               // console.log(chartdata1);
+                // console.log(chartdata1);
                 //var errorCardHtml = '<div class="card">Value Error: Data not available</div>';
-               // document.getElementById('Line1Summary').innerHTML = errorCardHtml;
+                // document.getElementById('Line1Summary').innerHTML = errorCardHtml;
                 // Optionally return here if you want to prevent further rendering
                 // return;
                 $('#lblLine1Error').css('display', 'block');
                 $('#Line1Summary').css('display', 'none');
             }
 
-           
+
             var piechart1 = new Chart(ctxpiechart1, {
                 type: 'pie',
                 data: {
@@ -782,7 +673,7 @@
 
             });
 
-          
+
 
             // Chart 2 (Pie Chart)
             var ctxpiechart2 = document.getElementById('Line2Summary').getContext('2d');
@@ -799,7 +690,7 @@
                 $('#lblLine2Error').css('display', 'block');
                 $('#Line2Summary').css('display', 'none');
             }
-            
+
 
             var piechart2 = new Chart(ctxpiechart2, {
                 type: 'pie',
@@ -855,7 +746,7 @@
                 },
                 plugins: [alwaysShowToolTip]
             });
-        
+
 
             // Chart 3 (Pie Chart)
             var ctxpiechart3 = document.getElementById('Line3Summary').getContext('2d');
@@ -870,9 +761,9 @@
                 console.log(chartdata3);
             } else {
 
-               $('#lblLine3Error').css('display', 'block');
-               $('#Line3Summary').css('display', 'none');
-        
+                $('#lblLine3Error').css('display', 'block');
+                $('#Line3Summary').css('display', 'none');
+
             }
 
             var piechart3 = new Chart(ctxpiechart3, {
@@ -926,11 +817,164 @@
                             display: false,
                         },
                     },
-                   
+
                 },
                 plugins: [alwaysShowToolTip]
             });
 
+
+            var ctxpiechart4 = document.getElementById('Line4Summary').getContext('2d');
+            var chartdata4 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstLine4Utilization));
+
+            var chrtlabels4 = [];
+            var chrtvalues4 = [];
+
+            if (chartdata4 && chartdata4.length > 0 && chartdata4[0].Label !== "Null") {
+                chrtlabels4 = chartdata4.map(function (item) { return item.Label; });
+                chrtvalues4 = chartdata4.map(function (item) { return item.Value; });
+                console.log(chartdata4);
+            } else {
+
+                $('#lblLine4Error').css('display', 'block');
+                $('#Line4Summary').css('display', 'none');
+
+            }
+
+            var piechart4 = new Chart(ctxpiechart4, {
+                type: 'pie',
+                data: {
+                    // labels: chrtlabels3,
+                    datasets: [{
+                        data: chrtvalues3,
+                        backgroundColor: [
+                            'rgba(0,0,255)',
+                            'rgba(0,128,0)',
+                            'rgba(0,255,0)',
+                            'rgba(128,128,0)',
+                            'rgba(128,0,0)',
+                            'rgba(255,0,0)',
+                            'rgba(255,255,0)',
+                            'rgba(128,0,128)',
+                            'rgba(192,192,192)',
+                            'rgba(195, 255, 104)'
+                        ],
+                        borderColor: [
+                            'rgba(0,0,256)',
+                            'rgba(0,128,1)',
+                            'rgba(0,255,1)',
+                            'rgba(128,128,1)',
+                            'rgba(128,0,1)',
+                            'rgba(255,0,1)',
+                            'rgba(255,255,1)',
+                            'rgba(128,0,129)',
+                            'rgba(192,192,193)',
+                            'rgba(195, 255, 104)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            boxWidth: 11,
+                            fontColor: "#757681",
+                            fontSize: 11
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            enable: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
+                    },
+
+                },
+                plugins: [alwaysShowToolTip]
+            });
+
+
+            var ctxpiechart5 = document.getElementById('Line5Summary').getContext('2d');
+            var chartdata5 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstLine5Utilization));
+
+            var chrtlabels5 = [];
+            var chrtvalues5 = [];
+
+            if (chartdata5 && chartdata5.length > 0 && chartdata5[0].Label !== "Null") {
+                chrtlabels5 = chartdata5.map(function (item) { return item.Label; });
+                chrtvalues5 = chartdata5.map(function (item) { return item.Value; });
+                console.log(chartdata5);
+            } else {
+
+                $('#lblLine5Error').css('display', 'block');
+                $('#Line5Summary').css('display', 'none');
+
+            }
+
+            var piechart5 = new Chart(ctxpiechart5, {
+                type: 'pie',
+                data: {
+                    // labels: chrtlabels3,
+                    datasets: [{
+                        data: chrtvalues3,
+                        backgroundColor: [
+                            'rgba(0,0,255)',
+                            'rgba(0,128,0)',
+                            'rgba(0,255,0)',
+                            'rgba(128,128,0)',
+                            'rgba(128,0,0)',
+                            'rgba(255,0,0)',
+                            'rgba(255,255,0)',
+                            'rgba(128,0,128)',
+                            'rgba(192,192,192)',
+                            'rgba(195, 255, 104)'
+                        ],
+                        borderColor: [
+                            'rgba(0,0,256)',
+                            'rgba(0,128,1)',
+                            'rgba(0,255,1)',
+                            'rgba(128,128,1)',
+                            'rgba(128,0,1)',
+                            'rgba(255,0,1)',
+                            'rgba(255,255,1)',
+                            'rgba(128,0,129)',
+                            'rgba(192,192,193)',
+                            'rgba(195, 255, 104)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            boxWidth: 11,
+                            fontColor: "#757681",
+                            fontSize: 11
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            enable: false,
+                        },
+                        legend: {
+                            display: false,
+                        },
+                    },
+
+                },
+                plugins: [alwaysShowToolTip]
+            });
+
+     
+            
+            
+            
+            
             // Cyct Chart 1 (Line Chart)
             var cyctdata1 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModule1Utilization));
             var cyctlabels1 = [];
@@ -949,8 +993,8 @@
             var cyctChart1 = {
                 labels: cyctlabels1,
                 datasets: [{
-                    label:'Cycle time',
-                    data: cycltvalues1, 
+                    label: 'Cycle time',
+                    data: cycltvalues1,
                     backgroundColor: [
                         'rgba(17, 188, 249, 0.8)', // Blue with transparency
                         'rgba(71, 222, 17, 0.8)' // Green with transparency
@@ -982,7 +1026,7 @@
                     },
                 },
             };
-            
+
             var ctxcyct1 = document.getElementById('Cyct1Summary').getContext('2d');
             var cyct1Chart = new Chart(ctxcyct1, {
                 type: 'bar', // Change type to line chart
@@ -1051,9 +1095,9 @@
                 //plugins: [alwaysShowToolTip]
             });
 
-        // // Update the chart to reflect changes
-        // piechart.update();
-    
+            // // Update the chart to reflect changes
+            // piechart.update();
+
 
             // Cyct Chart 3 (Line Chart)
             var cyctdata3 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModule3Utilization));
@@ -1115,7 +1159,126 @@
                 //plugins: [alwaysShowToolTip]
             });
 
-           
+            var cyctdata4 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModule4Utilization));
+            var cyctlabels4 = [];
+            var cycltvalues4 = [];
+
+            if (cyctdata4 && cyctdata4.length > 0 && cyctdata4[0].Label !== "Null") {
+                cyctlabels4 = cyctdata4.map(function (item) { return item.Label; });
+                cycltvalues4 = cyctdata4.map(function (item) { return item.Value; });
+                console.log(cyctdata4);
+            } else {
+
+                $('#lblcyct4Error').css('display', 'block');
+                $('#Cyct4Summary').css('display', 'none');
+            }
+
+            var cyctChart4 = {
+                labels: cyctlabels4,
+                datasets: [{
+                    label: 'Cycle time',
+                    data: cycltvalues3, // Assuming cycltvalues1 has at least 2 values
+                    backgroundColor: [
+                        'rgba(17, 188, 249, 0.8)', // Blue with transparency
+                        'rgba(71, 222, 17, 0.8)' // Green with transparency
+                    ],
+                    borderColor: [
+                        'rgba(17, 188, 249, 0.8)', // Solid blue border
+                        'rgba(71, 222, 17, 0.8)' // Solid green border
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var cyctoptions4 = {
+                responsive: true,
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        boxWidth: 11,
+                        fontColor: "#757681",
+                        fontSize: 11
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        enable: false,
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+            };
+
+            var ctxcyct4 = document.getElementById('Cyct4Summary').getContext('2d');
+            var cyct4Chart = new Chart(ctxcyct4, {
+                type: 'bar', // Change type to line chart
+                data: cyctChart4,
+                options: cyctoptions4,
+                //plugins: [alwaysShowToolTip]
+            });
+
+            var cyctdata5 = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.lstModule5Utilization));
+            var cyctlabels5 = [];
+            var cycltvalues5 = [];
+
+            if (cyctdata5 && cyctdata5.length > 0 && cyctdata5[0].Label !== "Null") {
+                cyctlabels5 = cyctdata5.map(function (item) { return item.Label; });
+                cycltvalues5 = cyctdata5.map(function (item) { return item.Value; });
+                console.log(cyctdata5);
+            } else {
+
+                $('#lblcyct5Error').css('display', 'block');
+                $('#Cyct5Summary').css('display', 'none');
+            }
+
+            var cyctChart5 = {
+                labels: cyctlabels5,
+                datasets: [{
+                    label: 'Cycle time',
+                    data: cycltvalues5, // Assuming cycltvalues1 has at least 2 values
+                    backgroundColor: [
+                        'rgba(17, 188, 249, 0.8)', // Blue with transparency
+                        'rgba(71, 222, 17, 0.8)' // Green with transparency
+                    ],
+                    borderColor: [
+                        'rgba(17, 188, 249, 0.8)', // Solid blue border
+                        'rgba(71, 222, 17, 0.8)' // Solid green border
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            var cyctoptions5 = {
+                responsive: true,
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        boxWidth: 11,
+                        fontColor: "#757681",
+                        fontSize: 11
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        enable: false,
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+            };
+
+            var ctxcyct5 = document.getElementById('Cyct5Summary').getContext('2d');
+            var cyct5Chart = new Chart(ctxcyct5, {
+                type: 'bar', // Change type to line chart
+                data: cyctChart5,
+                options: cyctoptions5,
+                //plugins: [alwaysShowToolTip]
+            });
+
+
+
 
         }
 

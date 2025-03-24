@@ -37,6 +37,8 @@ public class MainPageController : Controller
         string filePath1 = filepath + "\\" + today1 + "_Line1.csv";
         string filePath2 = filepath + "\\" + today1 + "_Line2.csv";
         string filePath3 = filepath + "\\" + today1 + "_Line3.csv";
+        string filePath4 = filepath + "\\" + today1 + "_Line4.csv";
+        string filePath5 = filepath + "\\" + today1 + "_Line5.csv";
 
         // Define initial start and end rows (you can adjust these based on your specific requirement)
         //const int StartRowLine = 8;
@@ -50,17 +52,27 @@ public class MainPageController : Controller
         List<Line1Utilization> Line1PieData = new List<Line1Utilization>();
         List<Line2Utilization> Line2PieData = new List<Line2Utilization>();
         List<Line3Utilization> Line3PieData = new List<Line3Utilization>();
+        List<Line4Utilization> Line4PieData = new List<Line4Utilization>();
+        List<Line5Utilization> Line5PieData = new List<Line5Utilization>();
+
         List<Module1Utilization> Line1CycleData = new List<Module1Utilization>();
         List<Module2Utilization> Line2CycleData = new List<Module2Utilization>();
         List<Module3Utilization> Line3CycleData = new List<Module3Utilization>();
+        List<Module4Utilization> Line4CycleData = new List<Module4Utilization>();
+        List<Module5Utilization> Line5CycleData = new List<Module5Utilization>();
+
         List<OEE1Utilization> Line1OEEData = new List<OEE1Utilization>();
         List<OEE2Utilization> Line2OEEData = new List<OEE2Utilization>();
         List<OEE3Utilization> Line3OEEData = new List<OEE3Utilization>();
+        List<OEE4Utilization> Line4OEEData = new List<OEE4Utilization>();
+        List<OEE5Utilization> Line5OEEData = new List<OEE5Utilization>();
 
         // Variables to store the start row for each word found in the CSV files
         int StartRowLine1 = -1, StartRowbcount1 = -1, StartRowCycle1 = -1;
         int StartRowLine2 = -1, StartRowbcount2 = -1, StartRowCycle2 = -1;
         int StartRowLine3 = -1, StartRowbcount3 = -1, StartRowCycle3 = -1;
+        int StartRowLine4 = -1, StartRowbcount4 = -1, StartRowCycle4 = -1;
+        int StartRowLine5 = -1, StartRowbcount5 = -1, StartRowCycle5 = -1;
 
         try
         {
@@ -190,18 +202,116 @@ public class MainPageController : Controller
             Line3PieData.Add(new Line3Utilization { Label = "Null", Value = 0 });
         }
 
+
+
+        try
+        {
+            ProcessCsvFileWithRowSearch(filePath4, ref StartRowLine4, ref StartRowbcount4, ref StartRowCycle4);
+            int StartRowLine1_4 = StartRowLine4 + 2;
+            int EndRowLine4 = StartRowLine4 + 12;
+            int StartRowbcount1_4 = StartRowbcount4 - 1;
+            int EndRowbcount4 = StartRowbcount4 + 2;
+            int StartRowCycle1_4 = StartRowCycle4 + 5;
+            int EndRowCycle4 = StartRowCycle4 + 11;
+            ProcessCsvFile<Line4Utilization, Module4Utilization, OEE4Utilization>(filePath4, StartRowLine1_4, EndRowLine4, StartRowbcount1_4, EndRowbcount4,
+            StartRowCycle1_4, EndRowCycle4, Line4PieData, (label, value) => new Line4Utilization { Label = label, Value = value }, Line4CycleData, (label, value) =>
+            new Module4Utilization { Label = label, Value = value }, Line4OEEData, (label, value1) => new OEE4Utilization { Label = label, Value = value1 });
+        }
+        catch (FileNotFoundException ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "Filenotfounderror");
+            //Log.Error(ex, $"File not found for filePath3: {ex.Message}");
+            Line4PieData.Add(new Line4Utilization { Label = "Null", Value = 0 });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "UnauthorizedAccessException");
+            //Log.Error(ex, $"Unauthorized access for filePath3: {ex.Message}");
+            Line4PieData.Add(new Line4Utilization { Label = "Null", Value = 0 });
+        }
+        catch (IOException ex) when (ex.Message.Contains("being used by another process"))
+        {
+            writeErrorMessage(ex.Message.ToString(), "Filereaderror");
+            //Log.Error(ex, $"File is in use for filePath3: {ex.Message}");
+            Line4PieData.Add(new Line4Utilization { Label = "Null", Value = 0 });
+        }
+        catch (IOException ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "IOException");
+            //Log.Error(ex, $"IO Exception for filePath3: {ex.Message}");
+            Line4PieData.Add(new Line4Utilization { Label = "Null", Value = 0 });
+        }
+        catch (Exception ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "Exception");
+            //Log.Error(ex, $"Error processing filePath3: {ex.Message}");
+            Line4PieData.Add(new Line4Utilization { Label = "Null", Value = 0 });
+        }
+
+        try
+        {
+            ProcessCsvFileWithRowSearch(filePath5, ref StartRowLine5, ref StartRowbcount5, ref StartRowCycle5);
+            int StartRowLine1_5 = StartRowLine5 + 2;
+            int EndRowLine5 = StartRowLine5 + 12;
+            int StartRowbcount1_5 = StartRowbcount5 - 1;
+            int EndRowbcount5 = StartRowbcount5 + 2;
+            int StartRowCycle1_5 = StartRowCycle5 + 5;
+            int EndRowCycle5 = StartRowCycle5 + 11;
+            ProcessCsvFile<Line5Utilization, Module5Utilization, OEE5Utilization>(filePath5, StartRowLine1_5, EndRowLine5, StartRowbcount1_5, EndRowbcount5,
+            StartRowCycle1_5, EndRowCycle5, Line5PieData, (label, value) => new Line5Utilization { Label = label, Value = value }, Line5CycleData, (label, value) =>
+            new Module5Utilization { Label = label, Value = value }, Line5OEEData, (label, value1) => new OEE5Utilization { Label = label, Value = value1 });
+        }
+        catch (FileNotFoundException ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "Filenotfounderror");
+            //Log.Error(ex, $"File not found for filePath3: {ex.Message}");
+            Line5PieData.Add(new Line5Utilization { Label = "Null", Value = 0 });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "UnauthorizedAccessException");
+            //Log.Error(ex, $"Unauthorized access for filePath3: {ex.Message}");
+            Line5PieData.Add(new Line5Utilization { Label = "Null", Value = 0 });
+        }
+        catch (IOException ex) when (ex.Message.Contains("being used by another process"))
+        {
+            writeErrorMessage(ex.Message.ToString(), "Filereaderror");
+            //Log.Error(ex, $"File is in use for filePath3: {ex.Message}");
+            Line5PieData.Add(new Line5Utilization { Label = "Null", Value = 0 });
+        }
+        catch (IOException ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "IOException");
+            //Log.Error(ex, $"IO Exception for filePath3: {ex.Message}");
+            Line5PieData.Add(new Line5Utilization { Label = "Null", Value = 0 });
+        }
+        catch (Exception ex)
+        {
+            writeErrorMessage(ex.Message.ToString(), "Exception");
+            //Log.Error(ex, $"Error processing filePath3: {ex.Message}");
+            Line5PieData.Add(new Line5Utilization { Label = "Null", Value = 0 });
+        }
+
         // Construct the result object to pass to the view
         var objUtilization = new Utilization
         {
             lstOEE1Utilization = Line1OEEData,
             lstOEE2Utilization = Line2OEEData,
             lstOEE3Utilization = Line3OEEData,
+            lstOEE4Utilization = Line4OEEData,
+            lstOEE5Utilization = Line5OEEData,
+
             lstLine1Utilization = Line1PieData,
             lstLine2Utilization = Line2PieData,
             lstLine3Utilization = Line3PieData,
+            lstLine4Utilization = Line4PieData,
+            lstLine5Utilization = Line5PieData,
+
             lstModule1Utilization = Line1CycleData,
             lstModule2Utilization = Line2CycleData,
             lstModule3Utilization = Line3CycleData,
+            lstModule4Utilization = Line4CycleData,
+            lstModule5Utilization = Line5CycleData,
         };
 
         return View(objUtilization);
